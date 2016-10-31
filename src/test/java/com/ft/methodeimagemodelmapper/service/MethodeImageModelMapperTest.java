@@ -126,7 +126,6 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getMediaType(), equalTo("image/jpeg"));
         assertThat(content.getPixelWidth(), nullValue());
         assertThat(content.getPixelHeight(), nullValue());
-        assertThat(content.getInternalBinaryUrl(), equalTo("http://host/the/path/to/d7625378-d4cd-11e2-bce1-002128161462"));
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
     }
 
@@ -145,7 +144,6 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getIdentifiers().first().getAuthority(), equalTo(METHODE_IDENTIFIER_AUTHORITY));
         assertThat(content.getIdentifiers().first().getIdentifierValue(), equalTo(UUID));
         assertThat(content.getMediaType(), equalTo("image/jpeg"));
-        assertThat(content.getInternalBinaryUrl(), equalTo("http://host/the/path/to/" + UUID));
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
     }
 
@@ -159,7 +157,6 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getIdentifiers().first().getAuthority(), equalTo(METHODE_IDENTIFIER_AUTHORITY));
         assertThat(content.getIdentifiers().first().getIdentifierValue(), equalTo(UUID));
         assertThat(content.getMediaType(), equalTo("image/jpeg"));
-        assertThat(content.getInternalBinaryUrl(), equalTo("http://host/the/path/to/" + UUID));
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
     }
 

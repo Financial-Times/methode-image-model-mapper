@@ -60,9 +60,3 @@ logging:
   appenders:
     - type: console
       logFormat: "%-5p [%d{ISO8601, GMT}] %c: %X{transaction_id} %m [%thread]%n%xEx"
-
-binaryTransformer:
-    hostAddress: "localhost:8080"
-    urlAddress: "/image/binary/%s"
-
-externalBinaryUrlBasePath: "http://com.ft.imagepublish.int.s3.amazonaws.com/"

@@ -1,10 +1,8 @@
 package com.ft.methodeimagemodelmapper.service;
 
 import com.ft.content.model.Content;
-import com.ft.methodeimagemodelmapper.configuration.BinaryTransformerConfiguration;
 import com.ft.methodeimagemodelmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
-import com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -25,7 +23,6 @@ public class MethodeImageModelMapperTest {
 
     private static final String UUID = "d7625378-d4cd-11e2-bce1-002128161462";
     private static final String METHODE_IDENTIFIER_AUTHORITY = "http://api.ft.com/system/FTCOM-METHODE";
-    private static final String EXTERNAL_BINARY_URL_BASE_PATH = "http://com.ft.imagepublish.int.s3.amazonaws.com/";
     private static final String TRANSACTION_ID = "tid_ptvw9xpnhv";
     private static final Date LAST_MODIFIED_DATE = new Date(300L);
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
@@ -33,8 +30,7 @@ public class MethodeImageModelMapperTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    private final BinaryTransformerConfiguration binaryTransformerConfiguration = new BinaryTransformerConfiguration("host", "/the/path/to/%s");
-    private final MethodeImageModelMapper methodeImageModelMapper = new MethodeImageModelMapper(binaryTransformerConfiguration, EXTERNAL_BINARY_URL_BASE_PATH);
+    private final MethodeImageModelMapper methodeImageModelMapper = new MethodeImageModelMapper();
 
     @Test
     public void testTransformImageThrowsIfTypeNotImage() {
@@ -60,8 +56,6 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getPixelWidth(), equalTo(2048));
         assertThat(content.getPixelHeight(), equalTo(1152));
         assertThat(content.getPublishedDate(), equalTo(new Date(1412088300000l)));
-        assertThat(content.getInternalBinaryUrl(), equalTo("http://host/the/path/to/d7625378-d4cd-11e2-bce1-002128161462"));
-        assertThat(content.getExternalBinaryUrl(), equalTo(EXTERNAL_BINARY_URL_BASE_PATH + UUID));
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
     }
 

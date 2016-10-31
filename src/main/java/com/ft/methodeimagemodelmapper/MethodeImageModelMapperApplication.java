@@ -60,9 +60,7 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
 
         final UriBuilder contentUriBuilder = UriBuilder.fromUri(configuration.getContentUriPrefix()).path("{uuid}");
 
-        ContentMapper imageModelMapper = new MethodeImageModelMapper(
-                configuration.getBinaryTransformerConfiguration(),
-                configuration.getExternalBinaryUrlBasePath());
+        ContentMapper imageModelMapper = new MethodeImageModelMapper();
         ContentMapper contentMapper = new MessageProducingContentMapper(
                 imageModelMapper,
                 objectMapper, consumerConfig.getSystemCode(),

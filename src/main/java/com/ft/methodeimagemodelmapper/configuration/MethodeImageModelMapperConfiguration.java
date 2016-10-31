@@ -8,18 +8,15 @@ public class MethodeImageModelMapperConfiguration extends Configuration {
     private final ConsumerConfiguration consumer;
     private final ProducerConfiguration producer;
     private final String contentUriPrefix;
-    private final BinaryTransformerConfiguration binaryTransformerConfiguration;
     private final String externalBinaryUrlBasePath;
 
     public MethodeImageModelMapperConfiguration(@JsonProperty("consumer") ConsumerConfiguration consumer,
                                                 @JsonProperty("producer") ProducerConfiguration producer,
                                                 @JsonProperty("contentUriPrefix") String contentUriPrefix,
-                                                @JsonProperty("binaryTransformer") BinaryTransformerConfiguration binaryTransformerConfiguration,
                                                 @JsonProperty("externalBinaryUrlBasePath") final String externalBinaryUrlBasePath) {
         this.consumer = consumer;
         this.producer = producer;
         this.contentUriPrefix = contentUriPrefix;
-        this.binaryTransformerConfiguration = binaryTransformerConfiguration;
         this.externalBinaryUrlBasePath = externalBinaryUrlBasePath;
     }
 
@@ -33,10 +30,6 @@ public class MethodeImageModelMapperConfiguration extends Configuration {
 
     public String getContentUriPrefix() {
         return contentUriPrefix;
-    }
-
-    public BinaryTransformerConfiguration getBinaryTransformerConfiguration() {
-        return binaryTransformerConfiguration;
     }
 
     public String getExternalBinaryUrlBasePath() {

@@ -15,7 +15,6 @@ import com.ft.methodeimagemodelmapper.configuration.ProducerConfiguration;
 import com.ft.methodeimagemodelmapper.health.CanConnectToMessageQueueProducerProxyHealthcheck;
 import com.ft.methodeimagemodelmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagemodelmapper.messaging.NativeCmsPublicationEventsListener;
-import com.ft.methodeimagemodelmapper.resources.RFC3339Module;
 import com.ft.methodeimagemodelmapper.service.ContentMapper;
 import com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
@@ -40,9 +39,6 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
 
     @Override
     public void initialize(Bootstrap<MethodeImageModelMapperConfiguration> bootstrap) {
-        ObjectMapper mapper = bootstrap.getObjectMapper();
-        mapper.registerModule(new RFC3339Module());
-
         bootstrap.addBundle(new AdvancedHealthCheckBundle());
         bootstrap.addBundle(new GoodToGoBundle(new DefaultGoodToGoChecker()));
     }

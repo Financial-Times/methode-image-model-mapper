@@ -19,5 +19,7 @@ EXPOSE 8080 8081
 CMD java $JAVA_OPTS \
      -Ddw.server.applicationConnectors[0].port=8080 \
      -Ddw.server.adminConnectors[0].port=8081 \
+     -Ddw.consumer.messageConsumer.queueProxyHost=http://$KAFKA_PROXY \
+     -Ddw.producer.messageProducer.proxyHostAndPort=$KAFKA_PROXY \
      -Ddw.logging.appenders[0].logFormat="%-5p [%d{ISO8601, GMT}] %c: %X{transaction_id} %replace(%m%n[%thread]%xEx){'\n', '|'}%nopex%n" \
      -jar methode-image-model-mapper.jar server config.yaml

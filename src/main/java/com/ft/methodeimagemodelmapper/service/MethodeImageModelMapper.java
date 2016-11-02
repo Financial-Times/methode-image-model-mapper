@@ -44,7 +44,7 @@ public class MethodeImageModelMapper implements ContentMapper {
         return transformAndHandleExceptions(eomFile, () -> transformEomFileToContent(eomFile, transactionId, lastModifiedDate).build());
     }
 
-    private Content transformAndHandleExceptions(EomFile eomFile, Action<Content> transformAction) {
+    protected Content transformAndHandleExceptions(EomFile eomFile, Action<Content> transformAction) {
         if (!isEomTypeSupported(eomFile)) {
             throw new MethodeContentNotSupportedException(String.format(FORMAT_UNSUPPORTED, eomFile.getUuid(), IMAGE_TYPE));
         }
@@ -169,7 +169,7 @@ public class MethodeImageModelMapper implements ContentMapper {
         return documentBuilderFactory.newDocumentBuilder();
     }
 
-    private interface Action<T> {
+    protected interface Action<T> {
         T perform() throws ParserConfigurationException, XPathExpressionException, IOException;
     }
 }

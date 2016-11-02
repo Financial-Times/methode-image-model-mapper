@@ -40,25 +40,28 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
     public boolean onMessage(Message message, String transactionId) {
         if (filter.test(message)) {
             LOG.info("process message");
-
-            try {
-                EomFile methodeContent = objectMapper.reader(EomFile.class).readValue(message.getMessageBody());
-                uuidValidator.validate(methodeContent.getUuid());
-                if (publishingValidator.isValidForPublishing(methodeContent)) {
-                    LOG.info("Importing content [{}] of type [{}] .", methodeContent.getUuid(), methodeContent.getType());
-                    LOG.info("Event for {}.", methodeContent.getUuid());
-                    mapper.mapImageModel(methodeContent, transactionId, message.getMessageTimestamp());
-                } else {
-                    LOG.info("Skip message [{}] of type [{}]", methodeContent.getUuid(), methodeContent.getType());
-                }
-            } catch (IOException e) {
-                throw new IngesterException("Unable to parse Methode content message", e);
-            }
+            handleMessage(message, transactionId);
         } else {
             LOG.info("skip message");
             LOG.debug("skip message {}", message);
         }
         return true;
+    }
+
+    private void handleMessage(Message message, String transactionId) {
+        try {
+            EomFile methodeContent = objectMapper.reader(EomFile.class).readValue(message.getMessageBody());
+            uuidValidator.validate(methodeContent.getUuid());
+            if (publishingValidator.isValidForPublishing(methodeContent)) {
+                LOG.info("Importing content [{}] of type [{}] .", methodeContent.getUuid(), methodeContent.getType());
+                LOG.info("Event for {}.", methodeContent.getUuid());
+                mapper.mapImageModel(methodeContent, transactionId, message.getMessageTimestamp());
+            } else {
+                LOG.info("Skip message [{}] of type [{}]", methodeContent.getUuid(), methodeContent.getType());
+            }
+        } catch (IOException e) {
+            throw new IngesterException("Unable to parse Methode content message", e);
+        }
     }
 
 }

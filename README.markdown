@@ -36,10 +36,6 @@ field `"type":"Image"`. Other messages are discarded.
         <td>mediaType</td>
         <td>/props/imageInfo/fileType</td>
     </tr>
-    <tr>
-        <td>publishedDate</td>
-        <td>/tl/t[tp = 'WebCopy'][count(/tl/t[tp = 'WebCopy'])]/dt/last</td>
-    </tr>
 </table>
 
 ## Running locally

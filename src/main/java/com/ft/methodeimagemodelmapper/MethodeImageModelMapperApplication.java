@@ -123,12 +123,4 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
                 .named("consumer-client")
                 .build();
     }
-
-//    private void registerConsumerHealthcheck(Environment environment, ConsumerConfiguration config, MessageQueueConsumerInitializer messageQueueConsumerInitializer) {
-//        HealthCheckRegistry healthchecks = environment.healthChecks();
-//        healthchecks.register("KafkaProxyConsumer",
-//                messageQueueConsumerInitializer.buildPassiveConsumerHealthcheck(
-//                        config.getHealthcheckConfiguration(), environment.metrics()
-//                ));
-//    }
 }

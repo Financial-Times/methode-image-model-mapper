@@ -10,7 +10,7 @@ import com.ft.messaging.standards.message.v1.MessageType;
 import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagemodelmapper.exception.ContentMapperException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
-import com.ft.methodeimagemodelmapper.service.ContentMapper;
+import com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -41,11 +41,10 @@ public class MessageProducingContentMapperTest {
     private static final String PUBLISH_REF = "junit12345";
     private static final MessageType CMS_CONTENT_PUBLISHED = MessageType.messageType("cms-content-published");
 
-
     private MessageProducingContentMapper mapper;
 
     @Mock
-    private ContentMapper delegate;
+    private MethodeImageModelMapper delegate;
     @Mock
     private MessageProducer producer;
     @Mock

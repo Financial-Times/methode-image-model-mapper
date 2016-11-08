@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.UUID;
 
-public class MethodeImageModelMapper implements ContentMapper {
+public class MethodeImageModelMapper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodeImageModelMapper.class);
     private static final String IMAGE_TYPE = "Image";
@@ -39,12 +39,11 @@ public class MethodeImageModelMapper implements ContentMapper {
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
     private static final String DATE_FORMAT = "yyyyMMddHHmmss";
 
-    @Override
     public Content mapImageModel(EomFile eomFile, String transactionId, Date lastModifiedDate) {
         return transformAndHandleExceptions(eomFile, () -> transformEomFileToContent(eomFile, transactionId, lastModifiedDate).build());
     }
 
-    protected Content transformAndHandleExceptions(EomFile eomFile, Action<Content> transformAction) {
+    Content transformAndHandleExceptions(EomFile eomFile, Action<Content> transformAction) {
         if (!isEomTypeSupported(eomFile)) {
             throw new MethodeContentNotSupportedException(String.format(FORMAT_UNSUPPORTED, eomFile.getUuid(), IMAGE_TYPE));
         }
@@ -169,7 +168,7 @@ public class MethodeImageModelMapper implements ContentMapper {
         return documentBuilderFactory.newDocumentBuilder();
     }
 
-    protected interface Action<T> {
+    interface Action<T> {
         T perform() throws ParserConfigurationException, XPathExpressionException, IOException;
     }
 }

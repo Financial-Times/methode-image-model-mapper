@@ -6,7 +6,6 @@ import com.ft.messaging.standards.message.v1.Message;
 import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagemodelmapper.exception.IngesterException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
-import com.ft.methodeimagemodelmapper.service.ContentMapper;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
 import com.ft.methodeimagemodelmapper.validation.UuidValidator;
 import org.slf4j.Logger;
@@ -20,13 +19,13 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
     private static final Logger LOG = LoggerFactory.getLogger(NativeCmsPublicationEventsListener.class);
 
     private final Predicate<Message> filter;
-    private final ContentMapper mapper;
+    private final MessageProducingContentMapper mapper;
     private final ObjectMapper objectMapper;
     private final SystemId systemId;
     private final UuidValidator uuidValidator;
     private final PublishingValidator publishingValidator;
 
-    public NativeCmsPublicationEventsListener(String systemCode, ContentMapper mapper, ObjectMapper objectMapper,
+    public NativeCmsPublicationEventsListener(String systemCode, MessageProducingContentMapper mapper, ObjectMapper objectMapper,
                                               UuidValidator uuidValidator, PublishingValidator publishingValidator) {
         this.systemId = SystemId.systemIdFromCode(systemCode);
         this.filter = msg -> (systemId.equals(msg.getOriginSystemId()));

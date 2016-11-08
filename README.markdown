@@ -1,5 +1,5 @@
 # Methode Image Model Mapper
-This is a web application which listens to the NativeCmsPublicationEvents Kafka topic for publishing events coming from Methode and process ony the messages
+This is a web application which listens to the NativeCmsPublicationEvents Kafka topic for publishing events coming from Methode and process only the messages
 containing an image. It extracts the image metadata, creates a message with this information and writes it to the CmsPublicationEvents topic.
 
 ## Introduction

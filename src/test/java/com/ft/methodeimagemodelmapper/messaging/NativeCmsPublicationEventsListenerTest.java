@@ -6,7 +6,6 @@ import com.ft.messaging.standards.message.v1.Message;
 import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagemodelmapper.exception.IngesterException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
-import com.ft.methodeimagemodelmapper.service.ContentMapper;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
 import com.ft.methodeimagemodelmapper.validation.UuidValidator;
 import org.junit.Before;
@@ -37,13 +36,12 @@ public class NativeCmsPublicationEventsListenerTest {
     private static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
     private static final String UUID = "d7625378-d4cd-11e2-bce1-002128161462";
 
-
     private NativeCmsPublicationEventsListener listener;
 
     private NativeCmsPublicationEventsListener errorListener;
 
     @Mock
-    private ContentMapper mapper;
+    private MessageProducingContentMapper mapper;
 
     @Mock
     private UuidValidator uuidValidator;

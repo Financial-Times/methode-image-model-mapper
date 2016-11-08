@@ -15,7 +15,6 @@ import com.ft.methodeimagemodelmapper.configuration.ProducerConfiguration;
 import com.ft.methodeimagemodelmapper.health.CanConnectToMessageQueueProducerProxyHealthcheck;
 import com.ft.methodeimagemodelmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagemodelmapper.messaging.NativeCmsPublicationEventsListener;
-import com.ft.methodeimagemodelmapper.service.ContentMapper;
 import com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
 import com.ft.methodeimagemodelmapper.validation.UuidValidator;
@@ -56,15 +55,20 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
 
         final UriBuilder contentUriBuilder = UriBuilder.fromUri(configuration.getContentUriPrefix()).path("{uuid}");
 
-        ContentMapper imageModelMapper = new MethodeImageModelMapper();
-        ContentMapper contentMapper = new MessageProducingContentMapper(
+        MethodeImageModelMapper imageModelMapper = new MethodeImageModelMapper();
+        MessageProducingContentMapper contentMapper = new MessageProducingContentMapper(
                 imageModelMapper,
                 objectMapper, consumerConfig.getSystemCode(),
                 producer, contentUriBuilder);
 
         Client consumerClient = getConsumerClient(environment, consumerConfig);
 
-        MessageListener listener = configureMessageConsumer(consumerConfig, contentMapper, objectMapper, new UuidValidator(), new PublishingValidator());
+        MessageListener listener = new NativeCmsPublicationEventsListener(
+                consumerConfig.getSystemCode(),
+                contentMapper,
+                objectMapper,
+                new UuidValidator(),
+                new PublishingValidator());
 
         startListener(environment, listener, consumerConfig, consumerClient);
 
@@ -94,11 +98,6 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
         return producer;
     }
 
-    private MessageListener configureMessageConsumer(ConsumerConfiguration config, ContentMapper contentMapper, ObjectMapper objectMapper,
-                                                     UuidValidator uuidValidator, PublishingValidator publishingValidator) {
-        return new NativeCmsPublicationEventsListener(config.getSystemCode(), contentMapper, objectMapper, uuidValidator, publishingValidator);
-    }
-
     protected void startListener(Environment environment, MessageListener listener, ConsumerConfiguration config, Client consumerClient) {
         final MessageQueueConsumerInitializer messageQueueConsumerInitializer =
                 new MessageQueueConsumerInitializer(config.getMessageQueueConsumerConfiguration(),
@@ -111,7 +110,6 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
                 ));
 
         environment.lifecycle().manage(messageQueueConsumerInitializer);
-        registerConsumerHealthcheck(environment, config, messageQueueConsumerInitializer);
     }
 
     private Client getConsumerClient(Environment environment, ConsumerConfiguration config) {
@@ -126,11 +124,11 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
                 .build();
     }
 
-    private void registerConsumerHealthcheck(Environment environment, ConsumerConfiguration config, MessageQueueConsumerInitializer messageQueueConsumerInitializer) {
-        HealthCheckRegistry healthchecks = environment.healthChecks();
-        healthchecks.register("KafkaProxyConsumer",
-                messageQueueConsumerInitializer.buildPassiveConsumerHealthcheck(
-                        config.getHealthcheckConfiguration(), environment.metrics()
-                ));
-    }
+//    private void registerConsumerHealthcheck(Environment environment, ConsumerConfiguration config, MessageQueueConsumerInitializer messageQueueConsumerInitializer) {
+//        HealthCheckRegistry healthchecks = environment.healthChecks();
+//        healthchecks.register("KafkaProxyConsumer",
+//                messageQueueConsumerInitializer.buildPassiveConsumerHealthcheck(
+//                        config.getHealthcheckConfiguration(), environment.metrics()
+//                ));
+//    }
 }

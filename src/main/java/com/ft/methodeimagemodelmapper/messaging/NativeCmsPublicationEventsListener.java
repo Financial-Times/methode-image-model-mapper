@@ -38,11 +38,10 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
     @Override
     public boolean onMessage(Message message, String transactionId) {
         if (filter.test(message)) {
-            LOG.info("process message");
+            LOG.info("Process message");
             handleMessage(message, transactionId);
         } else {
-            LOG.info("skip message");
-            LOG.debug("skip message {}", message);
+            LOG.info("Skip message from [{}]", message.getOriginSystemId());
         }
         return true;
     }

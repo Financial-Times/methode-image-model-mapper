@@ -1,9 +1,11 @@
 package com.ft.methodeimagemodelmapper.service;
 
 import com.ft.content.model.Content;
+import com.ft.methodeimagemodelmapper.configuration.BinaryTransformerConfiguration;
 import com.ft.methodeimagemodelmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagemodelmapper.exception.TransformationException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -32,7 +34,14 @@ public class MethodeImageModelMapperTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    private final MethodeImageModelMapper methodeImageModelMapper = new MethodeImageModelMapper();
+    private MethodeImageModelMapper methodeImageModelMapper;
+
+    @Before
+    public void setUP() {
+        methodeImageModelMapper = new MethodeImageModelMapper(
+                new BinaryTransformerConfiguration("localhost:8080", "/image/binary/%s"),
+                "http://com.ft.imagepublish.int.s3.amazonaws.com/");
+    }
 
     @Test
     public void testTransformImageThrowsIfTypeNotImage() {

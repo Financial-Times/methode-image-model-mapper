@@ -58,3 +58,9 @@ producer:
     panicGuideUrl: ""
 
 contentUriPrefix: http://methode-image-model-mapper.svc.ft.com/image/model
+
+binaryTransformer:
+    hostAddress: "localhost:8080"
+    urlAddress: "/image/binary/%s"
+
+externalBinaryUrlBasePath: "http://com.ft.imagepublish.int.s3.amazonaws.com/"

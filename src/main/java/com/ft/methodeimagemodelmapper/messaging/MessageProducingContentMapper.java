@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.UriBuilder;
+import java.net.URI;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
@@ -54,7 +55,12 @@ public class MessageProducingContentMapper {
     private Message createMessage(Content content) {
         LOG.info("Last Modified Date is: " + content.getLastModified());
         Map<String, Object> messageBody = new LinkedHashMap<>();
-        messageBody.put("contentUri", contentUriBuilder.build(content.getUuid()).toString());
+        URI contentUri = contentUriBuilder.build(content.getUuid());
+        messageBody.put("contentUri", contentUri.toString());
+        messageBody.put("uuid", content.getUuid());
+        URI relativeUrl = UriBuilder.fromPath(contentUri.getPath()).replaceQuery(contentUri.getQuery()).build();
+        messageBody.put("relativeUrl", relativeUrl);
+        messageBody.put("destination", "methode-image-model-transformer");
         messageBody.put("payload", content);
         String lastModified = RFC3339_FMT.format(OffsetDateTime.ofInstant(content.getLastModified().toInstant(), UTC));
         messageBody.put("lastModified", lastModified);

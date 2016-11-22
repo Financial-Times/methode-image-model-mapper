@@ -47,10 +47,6 @@ To run locally, run:
     
     java -jar target/methode-image-model-mapper.jar server methode-image-model-mapper.yaml
 
-## Build and Release
-The Jenkins build is triggered by commits to master. Docker images are build by http://ftaps116-lvpr-uk-d:8080/job/methode-image-model-mapper/ and pushed
-to up-registry.ft.com.
-
 ## Healthchecks 
 http://localhost:16080/__health
 

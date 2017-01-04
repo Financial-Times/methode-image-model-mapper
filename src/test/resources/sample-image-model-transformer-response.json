@@ -1,0 +1,31 @@
+{
+  "uuid": "d7625378-d4cd-11e2-bce1-002128161462",
+  "title": "Fruits of the soul",
+  "alternativeTitles": {"promotionalTitle": null},
+  "byline": null,
+  "brands": null,
+  "identifiers":[
+    {
+      "authority": "http://api.ft.com/system/FTCOM-METHODE",
+      "identifierValue": "d7625378-d4cd-11e2-bce1-002128161462"
+    }
+  ],
+  "publishedDate": "2014-09-30T14:45:00.000Z",
+  "standfirst": null,
+  "body": null,
+  "description": "Picture with fruits",
+  "mediaType": "image/jpeg",
+  "pixelWidth": 2048,
+  "pixelHeight": 1152,
+  "internalBinaryUrl": "http://localhost:8080/image/binary/d7625378-d4cd-11e2-bce1-002128161462",
+  "externalBinaryUrl": "http://com.ft.imagepublish.int.s3.amazonaws.com/d7625378-d4cd-11e2-bce1-002128161462",
+  "members": null,
+  "mainImage": null,
+  "standout": null,
+  "comments": null,
+  "copyright": {"notice": "© Bloomberg News"},
+  "webUrl": null,
+  "publishReference": "tid_ptvw9xpnhv",
+  "lastModified": null,
+  "canBeSyndicated": null
+}

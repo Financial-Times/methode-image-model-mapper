@@ -1,0 +1,33 @@
+{
+  "uuid": "d7625378-d4cd-11e2-bce1-002128161462",
+  "title": null,
+  "alternativeTitles": {
+    "promotionalTitle": null
+  },
+  "byline": null,
+  "brands": null,
+  "identifiers": [
+    {
+      "authority": "http://api.ft.com/system/FTCOM-METHODE",
+      "identifierValue": "d7625378-d4cd-11e2-bce1-002128161462"
+    }
+  ],
+  "publishedDate": null,
+  "standfirst": null,
+  "body": null,
+  "description": null,
+  "mediaType": "image/jpeg",
+  "pixelWidth": null,
+  "pixelHeight": null,
+  "internalBinaryUrl": "http://localhost:8080/image/binary/d7625378-d4cd-11e2-bce1-002128161462",
+  "externalBinaryUrl": "http://com.ft.imagepublish.int.s3.amazonaws.com/d7625378-d4cd-11e2-bce1-002128161462",
+  "members": null,
+  "mainImage": null,
+  "standout": null,
+  "comments": null,
+  "copyright": null,
+  "webUrl": null,
+  "publishReference": "tid_ptvw9xpnhv",
+  "lastModified": null,
+  "canBeSyndicated": null
+}

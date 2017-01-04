@@ -52,7 +52,6 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
             uuidValidator.validate(methodeContent.getUuid());
             if (publishingValidator.isValidForPublishing(methodeContent)) {
                 LOG.info("Importing content [{}] of type [{}] .", methodeContent.getUuid(), methodeContent.getType());
-                LOG.info("Event for {}.", methodeContent.getUuid());
                 mapper.mapImageModel(methodeContent, transactionId, message.getMessageTimestamp());
             } else {
                 LOG.info("Skip message [{}] of type [{}]", methodeContent.getUuid(), methodeContent.getType());

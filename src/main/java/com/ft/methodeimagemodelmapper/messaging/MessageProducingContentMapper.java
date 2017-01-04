@@ -45,7 +45,7 @@ public class MessageProducingContentMapper {
         this.contentUriBuilder = contentUriBuilder;
     }
 
-    Content mapImageModel(EomFile eomFile, String transactionId, Date lastModifiedDate) {
+    public Content mapImageModel(EomFile eomFile, String transactionId, Date lastModifiedDate) {
         List<Content> contents = Collections.singletonList(delegate.mapImageModel(eomFile, transactionId, lastModifiedDate));
         producer.send(contents.stream().map(this::createMessage).collect(Collectors.toList()));
         LOG.info("sent {} messages", contents.size());
@@ -79,7 +79,7 @@ public class MessageProducingContentMapper {
             msg = KeyedMessage.forMessageAndKey(msg, content.getUuid());
         } catch (JsonProcessingException e) {
             LOG.error("unable to write JSON for message", e);
-            throw new ContentMapperException("unable to write JSON for message", e);
+            throw new ContentMapperException("Unable to write JSON for message", e);
         }
         return msg;
     }

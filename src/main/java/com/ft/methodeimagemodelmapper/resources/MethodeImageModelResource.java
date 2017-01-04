@@ -53,7 +53,7 @@ public class MethodeImageModelResource {
     @Produces(MediaType.APPLICATION_JSON + CHARSET_UTF_8)
     public final Content mapImageModel(EomFile methodeContent, @Context HttpHeaders httpHeaders) {
         return getModelAndHandleExceptions(httpHeaders, (transactionId) ->
-                methodeImageModelMapper.mapImageModel(methodeContent, transactionId, null));
+                methodeImageModelMapper.mapImageModel(methodeContent, transactionId, new Date()));
     }
 
     @POST

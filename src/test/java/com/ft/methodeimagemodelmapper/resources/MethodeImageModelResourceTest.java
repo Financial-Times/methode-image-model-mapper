@@ -95,7 +95,7 @@ public class MethodeImageModelResourceTest {
     public void getImageModelShouldReturn200IfUuidAndTransactionIdOk() {
         final Content expectedContent = Content.builder().withUuid(java.util.UUID.fromString(UUID))
                 .withPublishReference(TRANSACTION_ID).build();
-        when(imageModelMapper.mapImageModel(file, TRANSACTION_ID, null))
+        when(imageModelMapper.mapImageModel(eq(file), eq(TRANSACTION_ID), any(Date.class)))
                 .thenReturn(expectedContent);
 
         final Content content = resource.mapImageModel(file, headers);
@@ -112,7 +112,7 @@ public class MethodeImageModelResourceTest {
         String invalidUuid = "someInvalidUuid";
         EomFile eomFile = new EomFile(invalidUuid, "image", null, "attributes",
                 "workflow", "sysattributes", "usageTickets", LAST_MODIFIED_DATE);
-        when(imageModelMapper.mapImageModel(eomFile, TRANSACTION_ID, null)).thenThrow(new IllegalArgumentException());
+        when(imageModelMapper.mapImageModel(eq(eomFile), eq(TRANSACTION_ID), any(Date.class))).thenThrow(new IllegalArgumentException());
 
         resource.mapImageModel(eomFile, headers);
     }
@@ -123,7 +123,7 @@ public class MethodeImageModelResourceTest {
         exception.expect(hasResponseStatus(400));
         exception.expect(hasResponseMessage(CONTENT_TYPE_NOT_SUPPORTED));
 
-        when(imageModelMapper.mapImageModel(file, TRANSACTION_ID, null))
+        when(imageModelMapper.mapImageModel(eq(file), eq(TRANSACTION_ID), any(Date.class)))
                 .thenThrow(new MethodeContentNotSupportedException(""));
 
         resource.mapImageModel(file, headers);
@@ -135,7 +135,7 @@ public class MethodeImageModelResourceTest {
         exception.expect(hasResponseStatus(400));
         exception.expect(hasResponseMessage(CONTENT_CANNOT_BE_MAPPED));
 
-        when(imageModelMapper.mapImageModel(file, TRANSACTION_ID, null))
+        when(imageModelMapper.mapImageModel(eq(file), eq(TRANSACTION_ID), any(Date.class)))
                 .thenThrow(new TransformationException(new IOException()));
 
         resource.mapImageModel(file, headers);

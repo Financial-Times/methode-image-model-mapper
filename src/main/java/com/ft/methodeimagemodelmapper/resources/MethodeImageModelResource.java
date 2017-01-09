@@ -13,6 +13,8 @@ import com.ft.methodeimagemodelmapper.model.EomFile;
 import com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
 import com.ft.methodeimagemodelmapper.validation.UuidValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -24,6 +26,8 @@ import java.util.Date;
 
 @Path("/")
 public class MethodeImageModelResource {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodeImageModelResource.class);
 
     private static final String CHARSET_UTF_8 = ";charset=utf-8";
 
@@ -52,6 +56,7 @@ public class MethodeImageModelResource {
     @Path("/map")
     @Produces(MediaType.APPLICATION_JSON + CHARSET_UTF_8)
     public final Content mapImageModel(EomFile methodeContent, @Context HttpHeaders httpHeaders) {
+        LOGGER.info("Mapping content with uuid [{}]", methodeContent.getUuid());
         return getModelAndHandleExceptions(methodeContent, httpHeaders, (transactionId) ->
                 methodeImageModelMapper.mapImageModel(methodeContent, transactionId, new Date()));
     }
@@ -59,6 +64,7 @@ public class MethodeImageModelResource {
     @POST
     @Path("/ingest")
     public final void ingestImageModel(EomFile methodeContent, @Context HttpHeaders httpHeaders) {
+        LOGGER.info("Ingesting content with uuid [{}]", methodeContent.getUuid());
         getModelAndHandleExceptions(methodeContent, httpHeaders, (transactionId) ->
                 messageProducingContentMapper.mapImageModel(methodeContent, transactionId, new Date()));
     }

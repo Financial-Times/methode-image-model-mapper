@@ -115,7 +115,7 @@ public class MethodeImageModelResourceComponentTest {
                 .post(ClientResponse.class, sourceApiJson);
 
         assertThat(response.getStatus(), equalTo(422));
-        final String expectedMessage = "{\"message\":\"" + CONTENT_TYPE_NOT_SUPPORTED + "\"}";
+        final String expectedMessage = "{\"message\":\"" + "Content cannot be mapped." + "\"}";
         assertThat(response.getEntity(String.class), equalTo(expectedMessage));
     }
 
@@ -130,7 +130,6 @@ public class MethodeImageModelResourceComponentTest {
                 .post(ClientResponse.class, sourceApiJson);
 
         ArgumentCaptor<List> sent = ArgumentCaptor.forClass(List.class);
-        //// TODO: 1/3/2017 check this
         assertThat(response.getStatus(), equalTo(204));
         verify(producer).send(sent.capture());
     }
@@ -160,7 +159,7 @@ public class MethodeImageModelResourceComponentTest {
                 .header("Content-Type", MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, sourceApiJson);
 
-        assertThat(response.getStatus(), equalTo(204));
+        assertThat(response.getStatus(), equalTo(422));
         verifyZeroInteractions(producer);
     }
 
@@ -172,7 +171,7 @@ public class MethodeImageModelResourceComponentTest {
                 .header("Content-Type", MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, sourceApiJson);
 
-        assertThat(response.getStatus(), equalTo(204));
+        assertThat(response.getStatus(), equalTo(422));
         verifyZeroInteractions(producer);
     }
 

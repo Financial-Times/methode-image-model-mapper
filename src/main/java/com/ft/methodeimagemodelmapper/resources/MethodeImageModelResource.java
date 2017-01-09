@@ -52,27 +52,25 @@ public class MethodeImageModelResource {
     @Path("/map")
     @Produces(MediaType.APPLICATION_JSON + CHARSET_UTF_8)
     public final Content mapImageModel(EomFile methodeContent, @Context HttpHeaders httpHeaders) {
-        return getModelAndHandleExceptions(httpHeaders, (transactionId) ->
+        return getModelAndHandleExceptions(methodeContent, httpHeaders, (transactionId) ->
                 methodeImageModelMapper.mapImageModel(methodeContent, transactionId, new Date()));
     }
 
     @POST
     @Path("/ingest")
     public final void ingestImageModel(EomFile methodeContent, @Context HttpHeaders httpHeaders) {
-        getModelAndHandleExceptions(httpHeaders, (transactionId) -> {
-            Content content = null;
-            uuidValidator.validate(methodeContent.getUuid());
-            if (publishingValidator.isValidForPublishing(methodeContent)) {
-                content = messageProducingContentMapper.mapImageModel(methodeContent, transactionId, new Date());
-            }
-            return content;
-        });
+        getModelAndHandleExceptions(methodeContent, httpHeaders, (transactionId) ->
+                messageProducingContentMapper.mapImageModel(methodeContent, transactionId, new Date()));
     }
 
-    private Content getModelAndHandleExceptions(HttpHeaders headers, Action<Content> getContentModel) {
+    private Content getModelAndHandleExceptions(EomFile methodeContent, HttpHeaders headers, Action<Content> getContentModel) {
         final String transactionId = TransactionIdUtils.getTransactionIdOrDie(headers);
         try {
-            return getContentModel.perform(transactionId);
+            uuidValidator.validate(methodeContent.getUuid());
+            if (publishingValidator.isValidForPublishing(methodeContent)) {
+                return getContentModel.perform(transactionId);
+            }
+            throw new TransformationException();
         } catch (IllegalArgumentException | ValidationException e) {
             throw ClientError.status(422).error(INVALID_UUID).exception(e);
         } catch (MethodeContentNotSupportedException e) {

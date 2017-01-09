@@ -105,9 +105,9 @@ public class MethodeImageModelResourceTest {
     }
 
     @Test
-    public void getImageModelShouldReturn400IfUuidInvalid() {
+    public void getImageModelShouldReturn422IfUuidInvalid() {
         exception.expect(WebApplicationClientException.class);
-        exception.expect(hasResponseStatus(400));
+        exception.expect(hasResponseStatus(422));
         exception.expect(hasResponseMessage(INVALID_UUID));
         String invalidUuid = "someInvalidUuid";
         EomFile eomFile = new EomFile(invalidUuid, "image", null, "attributes",
@@ -118,9 +118,9 @@ public class MethodeImageModelResourceTest {
     }
 
     @Test
-    public void getImageModelShouldReturn400IfContentTypeNotImage() throws IOException {
+    public void getImageModelShouldReturn422IfContentTypeNotImage() throws IOException {
         exception.expect(WebApplicationClientException.class);
-        exception.expect(hasResponseStatus(400));
+        exception.expect(hasResponseStatus(422));
         exception.expect(hasResponseMessage(CONTENT_TYPE_NOT_SUPPORTED));
 
         when(imageModelMapper.mapImageModel(eq(file), eq(TRANSACTION_ID), any(Date.class)))
@@ -130,9 +130,9 @@ public class MethodeImageModelResourceTest {
     }
 
     @Test
-    public void getImageModelShouldReturn400IfContentIsNotValid() throws IOException {
+    public void getImageModelShouldReturn422IfContentIsNotValid() throws IOException {
         exception.expect(WebApplicationClientException.class);
-        exception.expect(hasResponseStatus(400));
+        exception.expect(hasResponseStatus(422));
         exception.expect(hasResponseMessage(CONTENT_CANNOT_BE_MAPPED));
 
         when(imageModelMapper.mapImageModel(eq(file), eq(TRANSACTION_ID), any(Date.class)))
@@ -164,9 +164,9 @@ public class MethodeImageModelResourceTest {
     }
 
     @Test
-    public void importContentShouldReturn400ForContentWithInvalidUuid() {
+    public void importContentShouldReturn422ForContentWithInvalidUuid() {
         exception.expect(WebApplicationClientException.class);
-        exception.expect(hasResponseStatus(400));
+        exception.expect(hasResponseStatus(422));
         exception.expect(hasResponseMessage(CONTENT_CANNOT_BE_MAPPED));
 
         when(imageModelMapper.mapImageModel(eq(file), eq(TRANSACTION_ID), any(Date.class)))
@@ -178,9 +178,9 @@ public class MethodeImageModelResourceTest {
     }
 
     @Test
-    public void importContentShouldReturn400IfContentTypeNotImage() {
+    public void importContentShouldReturn422IfContentTypeNotImage() {
         exception.expect(WebApplicationClientException.class);
-        exception.expect(hasResponseStatus(400));
+        exception.expect(hasResponseStatus(422));
         exception.expect(hasResponseMessage(CONTENT_TYPE_NOT_SUPPORTED));
 
         when(imageModelMapper.mapImageModel(eq(file), eq(TRANSACTION_ID), any(Date.class)))
@@ -192,9 +192,9 @@ public class MethodeImageModelResourceTest {
     }
 
     @Test
-    public void importContentShouldReturn400IfContentIsNotValid() throws IOException {
+    public void importContentShouldReturn422IfContentIsNotValid() throws IOException {
         exception.expect(WebApplicationClientException.class);
-        exception.expect(hasResponseStatus(400));
+        exception.expect(hasResponseStatus(422));
         exception.expect(hasResponseMessage(CONTENT_CANNOT_BE_MAPPED));
 
         when(imageModelMapper.mapImageModel(eq(file), eq(TRANSACTION_ID), any(Date.class)))

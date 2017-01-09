@@ -74,11 +74,11 @@ public class MethodeImageModelResource {
         try {
             return getContentModel.perform(transactionId);
         } catch (IllegalArgumentException | ValidationException e) {
-            throw ClientError.status(400).error(INVALID_UUID).exception(e);
+            throw ClientError.status(422).error(INVALID_UUID).exception(e);
         } catch (MethodeContentNotSupportedException e) {
-            throw ClientError.status(400).error(CONTENT_TYPE_NOT_SUPPORTED).exception(e);
+            throw ClientError.status(422).error(CONTENT_TYPE_NOT_SUPPORTED).exception(e);
         } catch (TransformationException e) {
-            throw ClientError.status(400).error(CONTENT_CANNOT_BE_MAPPED).exception(e);
+            throw ClientError.status(422).error(CONTENT_CANNOT_BE_MAPPED).exception(e);
         } catch (ContentMapperException e) {
             throw ServerError.status(500).error(UNABLE_TO_WRITE_JSON_MESSAGE).exception(e);
         }

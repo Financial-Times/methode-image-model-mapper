@@ -4,6 +4,7 @@ import com.codahale.metrics.health.HealthCheckRegistry;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ft.api.util.buildinfo.BuildInfoResource;
 import com.ft.api.util.buildinfo.VersionResource;
+import com.ft.api.util.transactionid.TransactionIdFilter;
 import com.ft.jerseyhttpwrapper.ResilientClientBuilder;
 import com.ft.message.consumer.MessageListener;
 import com.ft.message.consumer.MessageQueueConsumerInitializer;
@@ -15,6 +16,7 @@ import com.ft.methodeimagemodelmapper.configuration.ProducerConfiguration;
 import com.ft.methodeimagemodelmapper.health.CanConnectToMessageQueueProducerProxyHealthcheck;
 import com.ft.methodeimagemodelmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagemodelmapper.messaging.NativeCmsPublicationEventsListener;
+import com.ft.methodeimagemodelmapper.resources.MethodeImageModelResource;
 import com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
 import com.ft.methodeimagemodelmapper.validation.UuidValidator;
@@ -28,7 +30,9 @@ import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import javax.servlet.DispatcherType;
 import javax.ws.rs.core.UriBuilder;
+import java.util.EnumSet;
 
 public class MethodeImageModelMapperApplication extends Application<MethodeImageModelMapperConfiguration> {
 
@@ -44,6 +48,9 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
 
     @Override
     public void run(MethodeImageModelMapperConfiguration configuration, Environment environment) throws Exception {
+        environment.servlets().addFilter("transactionIdFilter", new TransactionIdFilter())
+                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/image/model/*");
+
         JerseyEnvironment jersey = environment.jersey();
         jersey.register(new VersionResource());
         jersey.register(new BuildInfoResource());
@@ -65,15 +72,19 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
 
         Client consumerClient = getConsumerClient(environment, consumerConfig);
 
+        UuidValidator uuidValidator = new UuidValidator();
+        PublishingValidator publishingValidator = new PublishingValidator();
+
         MessageListener listener = new NativeCmsPublicationEventsListener(
                 consumerConfig.getSystemCode(),
                 contentMapper,
                 objectMapper,
-                new UuidValidator(),
-                new PublishingValidator());
+                uuidValidator,
+                publishingValidator);
 
         startListener(environment, listener, consumerConfig, consumerClient);
 
+        environment.jersey().register(new MethodeImageModelResource(imageModelMapper, contentMapper, uuidValidator, publishingValidator));
     }
 
     protected MessageProducer configureMessageProducer(Environment environment, ProducerConfiguration config) {

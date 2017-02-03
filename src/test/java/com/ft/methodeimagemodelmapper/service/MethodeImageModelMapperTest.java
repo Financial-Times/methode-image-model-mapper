@@ -68,6 +68,7 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getPixelHeight(), equalTo(1152));
         assertThat(content.getPublishedDate(), equalTo(new Date(1412088300000l)));
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
+        assertThat(content.getFirstPublishedDate(), equalTo(new Date(1412088300000l)));
     }
 
     public EomFile createSampleMethodeImage() throws Exception {

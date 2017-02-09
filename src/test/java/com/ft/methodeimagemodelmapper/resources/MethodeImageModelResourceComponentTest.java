@@ -67,7 +67,6 @@ public class MethodeImageModelResourceComponentTest {
         assertThat(actualContent.getMediaType(), equalTo(expectedContent.getMediaType()));
         assertThat(actualContent.getPixelHeight(), equalTo(expectedContent.getPixelHeight()));
         assertThat(actualContent.getPixelWidth(), equalTo(expectedContent.getPixelWidth()));
-        assertThat(actualContent.getInternalBinaryUrl(), equalTo(expectedContent.getInternalBinaryUrl()));
         assertThat(actualContent.getExternalBinaryUrl(), equalTo(expectedContent.getExternalBinaryUrl()));
         assertThat(actualContent.getPublishReference(), equalTo(expectedContent.getPublishReference()));
     }
@@ -96,7 +95,6 @@ public class MethodeImageModelResourceComponentTest {
         assertThat(actualContent.getMediaType(), equalTo(expectedContent.getMediaType()));
         assertThat(actualContent.getPixelHeight(), equalTo(expectedContent.getPixelHeight()));
         assertThat(actualContent.getPixelWidth(), equalTo(expectedContent.getPixelWidth()));
-        assertThat(actualContent.getInternalBinaryUrl(), equalTo(expectedContent.getInternalBinaryUrl()));
         assertThat(actualContent.getExternalBinaryUrl(), equalTo(expectedContent.getExternalBinaryUrl()));
         assertThat(actualContent.getPublishReference(), equalTo(expectedContent.getPublishReference()));
     }

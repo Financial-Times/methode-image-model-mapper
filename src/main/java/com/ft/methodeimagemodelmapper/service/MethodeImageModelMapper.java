@@ -3,7 +3,6 @@ package com.ft.methodeimagemodelmapper.service;
 import com.ft.content.model.Content;
 import com.ft.content.model.Copyright;
 import com.ft.content.model.Identifier;
-import com.ft.methodeimagemodelmapper.configuration.BinaryTransformerConfiguration;
 import com.ft.methodeimagemodelmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagemodelmapper.exception.TransformationException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
@@ -40,18 +39,15 @@ public class MethodeImageModelMapper {
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
     private static final String DATE_FORMAT = "yyyyMMddHHmmss";
 
-    private final BinaryTransformerConfiguration binaryTransformer;
     private final String externalBinaryUrlBasePath;
 
-    public MethodeImageModelMapper(BinaryTransformerConfiguration binaryTransformer, String externalBinaryUrlBasePath) {
-        this.binaryTransformer = binaryTransformer;
+    public MethodeImageModelMapper(String externalBinaryUrlBasePath) {
         this.externalBinaryUrlBasePath = externalBinaryUrlBasePath;
     }
 
     public Content mapImageModel(EomFile eomFile, String transactionId, Date lastModifiedDate) {
         String uuid = eomFile.getUuid();
         return transformAndHandleExceptions(eomFile, () -> transformEomFileToContent(eomFile, transactionId, lastModifiedDate)
-                .withInternalBinaryUrl(binaryTransformer.buildInternalDataUrl(uuid))
                 .withExternalBinaryUrl(externalBinaryUrlBasePath + uuid)
                 .build());
     }

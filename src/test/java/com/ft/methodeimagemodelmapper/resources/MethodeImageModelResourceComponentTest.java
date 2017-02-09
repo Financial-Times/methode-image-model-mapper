@@ -70,6 +70,7 @@ public class MethodeImageModelResourceComponentTest {
         assertThat(actualContent.getInternalBinaryUrl(), equalTo(expectedContent.getInternalBinaryUrl()));
         assertThat(actualContent.getExternalBinaryUrl(), equalTo(expectedContent.getExternalBinaryUrl()));
         assertThat(actualContent.getPublishReference(), equalTo(expectedContent.getPublishReference()));
+        assertThat(actualContent.getFirstPublishedDate(), equalTo(expectedContent.getFirstPublishedDate()));
     }
 
     @Test
@@ -99,6 +100,7 @@ public class MethodeImageModelResourceComponentTest {
         assertThat(actualContent.getInternalBinaryUrl(), equalTo(expectedContent.getInternalBinaryUrl()));
         assertThat(actualContent.getExternalBinaryUrl(), equalTo(expectedContent.getExternalBinaryUrl()));
         assertThat(actualContent.getPublishReference(), equalTo(expectedContent.getPublishReference()));
+        assertThat(actualContent.getFirstPublishedDate(), equalTo(expectedContent.getFirstPublishedDate()));
     }
 
     @Test

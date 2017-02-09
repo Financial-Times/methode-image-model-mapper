@@ -131,7 +131,8 @@ public class MethodeImageModelMapper {
                 .withPublishReference(transactionId)
                 .withLastModified(lastModifiedDate)
                 .withCopyright(Copyright.noticeOnly(copyrightNotice))
-                .withMediaType(mediaType);
+                .withMediaType(mediaType)
+                .withFirstPublishedDate(publishDate);
     }
 
     private String firstOf(String... strings) {

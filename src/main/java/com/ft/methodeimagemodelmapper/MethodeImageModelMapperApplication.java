@@ -38,8 +38,6 @@ import java.util.EnumSet;
 
 public class MethodeImageModelMapperApplication extends Application<MethodeImageModelMapperConfiguration> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodeImageModelMapperApplication.class);
-
     public static void main(String[] args) throws Exception {
         new MethodeImageModelMapperApplication().run(args);
     }

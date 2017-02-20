@@ -29,12 +29,16 @@ import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.DispatcherType;
 import javax.ws.rs.core.UriBuilder;
 import java.util.EnumSet;
 
 public class MethodeImageModelMapperApplication extends Application<MethodeImageModelMapperConfiguration> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodeImageModelMapperApplication.class);
 
     public static void main(String[] args) throws Exception {
         new MethodeImageModelMapperApplication().run(args);
@@ -48,6 +52,7 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
 
     @Override
     public void run(MethodeImageModelMapperConfiguration configuration, Environment environment) throws Exception {
+        LOGGER.info("ExternalBinaryUrl: {}", configuration.getExternalBinaryUrlBasePath());
         environment.servlets().addFilter("transactionIdFilter", new TransactionIdFilter())
                 .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/image/model/*");
 

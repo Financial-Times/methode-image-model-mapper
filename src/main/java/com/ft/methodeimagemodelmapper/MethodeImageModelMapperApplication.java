@@ -52,7 +52,6 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
 
     @Override
     public void run(MethodeImageModelMapperConfiguration configuration, Environment environment) throws Exception {
-        LOGGER.info("ExternalBinaryUrl: {}", configuration.getExternalBinaryUrlBasePath());
         environment.servlets().addFilter("transactionIdFilter", new TransactionIdFilter())
                 .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/image/model/*");
 

@@ -1,9 +1,13 @@
 FROM coco/dropwizardbase:0.7.x-mvn333
 
-COPY . /
+COPY . /methode-image-model-mapper
 
 RUN apk --update add git \
+ && cd methode-image-model-mapper \
  && HASH=$(git log -1 --pretty=format:%H) \
+ && TAG=$(git tag -l --contains $HASH) \
+ && VERSION=${TAG:-untagged} \
+ && mvn versions:set -DnewVersion=$VERSION \
  && mvn install -Dbuild.git.revision=$HASH -Djava.net.preferIPv4Stack=true \
  && rm -f target/methode-image-model-mapper-*sources.jar \
  && mv target/methode-image-model-mapper-*.jar /methode-image-model-mapper.jar \

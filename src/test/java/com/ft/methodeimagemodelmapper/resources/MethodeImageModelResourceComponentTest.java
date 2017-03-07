@@ -2,6 +2,7 @@ package com.ft.methodeimagemodelmapper.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ft.content.model.Content;
+import com.ft.content.model.Distribution;
 import com.ft.messagequeueproducer.MessageProducer;
 import com.ft.methodeimagemodelmapper.MethodeImageModelMapperApplication;
 import com.ft.methodeimagemodelmapper.configuration.MethodeImageModelMapperConfiguration;
@@ -71,6 +72,7 @@ public class MethodeImageModelResourceComponentTest {
         assertThat(actualContent.getExternalBinaryUrl(), equalTo(expectedContent.getExternalBinaryUrl()));
         assertThat(actualContent.getPublishReference(), equalTo(expectedContent.getPublishReference()));
         assertThat(actualContent.getFirstPublishedDate(), equalTo(expectedContent.getFirstPublishedDate()));
+        assertThat(actualContent.getCanBeDistributed(), equalTo(Distribution.VERIFY));
     }
 
     @Test
@@ -101,6 +103,7 @@ public class MethodeImageModelResourceComponentTest {
         assertThat(actualContent.getExternalBinaryUrl(), equalTo(expectedContent.getExternalBinaryUrl()));
         assertThat(actualContent.getPublishReference(), equalTo(expectedContent.getPublishReference()));
         assertThat(actualContent.getFirstPublishedDate(), equalTo(expectedContent.getFirstPublishedDate()));
+        assertThat(actualContent.getCanBeDistributed(), equalTo(Distribution.VERIFY));
     }
 
     @Test

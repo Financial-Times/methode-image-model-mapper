@@ -30,5 +30,6 @@
   "publishReference": "tid_ptvw9xpnhv",
   "lastModified": null,
   "canBeSyndicated": null,
-  "firstPublishedDate": null
+  "firstPublishedDate": null,
+  "canBeDistributed": "verify"
 }

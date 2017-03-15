@@ -1,6 +1,7 @@
 package com.ft.methodeimagemodelmapper.service;
 
 import com.ft.content.model.Content;
+import com.ft.content.model.Distribution;
 import com.ft.methodeimagemodelmapper.configuration.BinaryTransformerConfiguration;
 import com.ft.methodeimagemodelmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagemodelmapper.exception.TransformationException;
@@ -69,6 +70,7 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getPublishedDate(), equalTo(new Date(1412088300000l)));
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
         assertThat(content.getFirstPublishedDate(), equalTo(new Date(1412088300000l)));
+        assertThat(content.getCanBeDistributed(), equalTo(Distribution.VERIFY));
     }
 
     public EomFile createSampleMethodeImage() throws Exception {

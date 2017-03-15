@@ -28,5 +28,6 @@
   "publishReference": "tid_ptvw9xpnhv",
   "lastModified": null,
   "canBeSyndicated": null,
-  "firstPublishedDate": "2014-09-30T14:45:00.000Z"
+  "firstPublishedDate": "2014-09-30T14:45:00.000Z",
+  "canBeDistributed": "verify"
 }

@@ -123,6 +123,7 @@ public class MethodeImageModelMapper {
         String uuid = eomFile.getUuid();
         return Content.builder()
                 .withUuid(UUID.fromString(uuid))
+                .withType(IMAGE_TYPE)
                 .withIdentifiers(ImmutableSortedSet.of(new Identifier(SOURCE_METHODE, uuid)))
                 .withDescription(altText)
                 .withTitle(caption)

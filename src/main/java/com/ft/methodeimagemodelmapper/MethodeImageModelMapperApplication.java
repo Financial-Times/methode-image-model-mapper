@@ -49,7 +49,7 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
     @Override
     public void run(MethodeImageModelMapperConfiguration configuration, Environment environment) throws Exception {
         environment.servlets().addFilter("transactionIdFilter", new TransactionIdFilter())
-                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/image/model/*");
+                .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/ingest", "/map");
 
         JerseyEnvironment jersey = environment.jersey();
         jersey.register(new VersionResource());

@@ -28,6 +28,7 @@
         <target-jdk>1.8</target-jdk>
         <resilient-jersey-wrapper.version>0.4.0</resilient-jersey-wrapper.version>
         <surefire.plugin.version>2.18.1</surefire.plugin.version>
+        <argLine>-Djava.net.preferIPv4Stack=true</argLine>
     </properties>
 
     <repositories>
@@ -324,9 +325,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
-                <configuration>
-                    <argLine>-Djava.net.preferIPv4Stack=true</argLine>
-                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.3.0</version>
             </plugin>
         </plugins>
     </build>

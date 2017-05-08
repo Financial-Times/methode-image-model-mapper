@@ -19,7 +19,6 @@ import com.ft.methodeimagemodelmapper.messaging.NativeCmsPublicationEventsListen
 import com.ft.methodeimagemodelmapper.resources.MethodeImageModelResource;
 import com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
-import com.ft.methodeimagemodelmapper.validation.UuidValidator;
 import com.ft.platform.dropwizard.AdvancedHealthCheckBundle;
 import com.ft.platform.dropwizard.DefaultGoodToGoChecker;
 import com.ft.platform.dropwizard.GoodToGoBundle;
@@ -72,19 +71,17 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
 
         Client consumerClient = getConsumerClient(environment, consumerConfig);
 
-        UuidValidator uuidValidator = new UuidValidator();
         PublishingValidator publishingValidator = new PublishingValidator();
 
         MessageListener listener = new NativeCmsPublicationEventsListener(
                 consumerConfig.getSystemCode(),
                 contentMapper,
                 objectMapper,
-                uuidValidator,
                 publishingValidator);
 
         startListener(environment, listener, consumerConfig, consumerClient);
 
-        environment.jersey().register(new MethodeImageModelResource(imageModelMapper, contentMapper, uuidValidator, publishingValidator));
+        environment.jersey().register(new MethodeImageModelResource(imageModelMapper, contentMapper, publishingValidator));
     }
 
     protected MessageProducer configureMessageProducer(Environment environment, ProducerConfiguration config) {

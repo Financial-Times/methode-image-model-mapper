@@ -7,7 +7,6 @@ import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagemodelmapper.exception.IngesterException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
-import com.ft.methodeimagemodelmapper.validation.UuidValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,9 +43,6 @@ public class NativeCmsPublicationEventsListenerTest {
     private MessageProducingContentMapper mapper;
 
     @Mock
-    private UuidValidator uuidValidator;
-
-    @Mock
     private PublishingValidator publishingValidator;
 
     @Mock
@@ -57,11 +53,11 @@ public class NativeCmsPublicationEventsListenerTest {
 
     @Before
     public void setUp() throws IOException {
-        listener = new NativeCmsPublicationEventsListener(SYSTEM_CODE, mapper, JACKSON_MAPPER, uuidValidator, publishingValidator);
+        listener = new NativeCmsPublicationEventsListener(SYSTEM_CODE, mapper, JACKSON_MAPPER, publishingValidator);
 
         when(objectMapper.reader(EomFile.class)).thenReturn(objectReader);
         when(objectReader.readValue(anyString())).thenThrow(IOException.class);
-        errorListener = new NativeCmsPublicationEventsListener(SYSTEM_CODE, mapper, objectMapper, uuidValidator, publishingValidator);
+        errorListener = new NativeCmsPublicationEventsListener(SYSTEM_CODE, mapper, objectMapper, publishingValidator);
     }
 
     @Test

@@ -7,7 +7,7 @@ import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagemodelmapper.exception.IngesterException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
-import com.ft.methodeimagemodelmapper.validation.UuidValidator;
+import com.ft.uuidutils.UuidValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,16 +22,14 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
     private final MessageProducingContentMapper mapper;
     private final ObjectMapper objectMapper;
     private final SystemId systemId;
-    private final UuidValidator uuidValidator;
     private final PublishingValidator publishingValidator;
 
     public NativeCmsPublicationEventsListener(String systemCode, MessageProducingContentMapper mapper, ObjectMapper objectMapper,
-                                              UuidValidator uuidValidator, PublishingValidator publishingValidator) {
+                                              PublishingValidator publishingValidator) {
         this.systemId = SystemId.systemIdFromCode(systemCode);
         this.filter = msg -> (systemId.equals(msg.getOriginSystemId()));
         this.mapper = mapper;
         this.objectMapper = objectMapper;
-        this.uuidValidator = uuidValidator;
         this.publishingValidator = publishingValidator;
     }
 
@@ -49,7 +47,7 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
     private void handleMessage(Message message, String transactionId) {
         try {
             EomFile methodeContent = objectMapper.reader(EomFile.class).readValue(message.getMessageBody());
-            uuidValidator.validate(methodeContent.getUuid());
+            UuidValidation.of(methodeContent.getUuid());
             if (publishingValidator.isValidForPublishing(methodeContent)) {
                 LOG.info("Importing content [{}] of type [{}] .", methodeContent.getUuid(), methodeContent.getType());
                 mapper.mapImageModel(methodeContent, transactionId, message.getMessageTimestamp());

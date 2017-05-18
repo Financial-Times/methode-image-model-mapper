@@ -7,7 +7,7 @@ import com.ft.messaging.standards.message.v1.SystemId;
 import com.ft.methodeimagemodelmapper.exception.IngesterException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
-import com.ft.uuidutils.UuidValidation;
+import com.ft.uuidutils.UUIDValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +47,7 @@ public class NativeCmsPublicationEventsListener implements MessageListener {
     private void handleMessage(Message message, String transactionId) {
         try {
             EomFile methodeContent = objectMapper.reader(EomFile.class).readValue(message.getMessageBody());
-            UuidValidation.of(methodeContent.getUuid());
+            UUIDValidation.of(methodeContent.getUuid());
             if (publishingValidator.isValidForPublishing(methodeContent)) {
                 LOG.info("Importing content [{}] of type [{}] .", methodeContent.getUuid(), methodeContent.getType());
                 mapper.mapImageModel(methodeContent, transactionId, message.getMessageTimestamp());

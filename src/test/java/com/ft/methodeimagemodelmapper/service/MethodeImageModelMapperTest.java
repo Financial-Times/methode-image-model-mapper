@@ -1,27 +1,26 @@
 package com.ft.methodeimagemodelmapper.service;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.ft.content.model.Content;
 import com.ft.content.model.Distribution;
 import com.ft.methodeimagemodelmapper.configuration.BinaryTransformerConfiguration;
 import com.ft.methodeimagemodelmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagemodelmapper.exception.TransformationException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Date;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Date;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MethodeImageModelMapperTest {
@@ -31,6 +30,7 @@ public class MethodeImageModelMapperTest {
     private static final String TRANSACTION_ID = "tid_ptvw9xpnhv";
     private static final Date LAST_MODIFIED_DATE = new Date(300L);
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
+    private static final String IMAGE_TYPE = "Image";
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -60,6 +60,7 @@ public class MethodeImageModelMapperTest {
         final Content content = methodeImageModelMapper.mapImageModel(eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
 
         assertThat(content.getUuid(), equalTo(UUID));
+        assertThat(content.getType(), equalTo(IMAGE_TYPE));
         assertThat(content.getIdentifiers().first().getAuthority(), equalTo(METHODE_IDENTIFIER_AUTHORITY));
         assertThat(content.getIdentifiers().first().getIdentifierValue(), equalTo(UUID));
         assertThat(content.getTitle(), equalTo("Fruits of the soul"));
@@ -133,6 +134,7 @@ public class MethodeImageModelMapperTest {
         final Content content = methodeImageModelMapper.mapImageModel(eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
 
         assertThat(content.getUuid(), equalTo(UUID));
+        assertThat(content.getType(), equalTo(IMAGE_TYPE));
         assertThat(content.getIdentifiers().first().getAuthority(), equalTo(METHODE_IDENTIFIER_AUTHORITY));
         assertThat(content.getIdentifiers().first().getIdentifierValue(), equalTo(UUID));
         assertThat(content.getTitle(), equalTo("Fruits of the soul"));
@@ -155,6 +157,7 @@ public class MethodeImageModelMapperTest {
         final Content content = methodeImageModelMapper.mapImageModel(eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
 
         assertThat(content.getUuid(), equalTo(UUID));
+        assertThat(content.getType(), equalTo(IMAGE_TYPE));
         assertThat(content.getIdentifiers().first().getAuthority(), equalTo(METHODE_IDENTIFIER_AUTHORITY));
         assertThat(content.getIdentifiers().first().getIdentifierValue(), equalTo(UUID));
         assertThat(content.getMediaType(), equalTo("image/jpeg"));
@@ -168,6 +171,7 @@ public class MethodeImageModelMapperTest {
         final Content content = methodeImageModelMapper.mapImageModel(eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
 
         assertThat(content.getUuid(), equalTo(UUID));
+        assertThat(content.getType(), equalTo(IMAGE_TYPE));
         assertThat(content.getIdentifiers().first().getAuthority(), equalTo(METHODE_IDENTIFIER_AUTHORITY));
         assertThat(content.getIdentifiers().first().getIdentifierValue(), equalTo(UUID));
         assertThat(content.getMediaType(), equalTo("image/jpeg"));

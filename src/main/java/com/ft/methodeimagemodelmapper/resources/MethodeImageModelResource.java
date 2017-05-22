@@ -12,7 +12,7 @@ import com.ft.methodeimagemodelmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagemodelmapper.model.EomFile;
 import com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
-import com.ft.methodeimagemodelmapper.validation.UuidValidator;
+import com.ft.uuidutils.UUIDValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,17 +38,14 @@ public class MethodeImageModelResource {
 
     private final MethodeImageModelMapper methodeImageModelMapper;
     private final MessageProducingContentMapper messageProducingContentMapper;
-    private final UuidValidator uuidValidator;
     private final PublishingValidator publishingValidator;
 
 
     public MethodeImageModelResource(MethodeImageModelMapper methodeImageModelMapper,
                                      MessageProducingContentMapper messageProducingContentMapper,
-                                     UuidValidator uuidValidator,
                                      PublishingValidator publishingValidator) {
         this.methodeImageModelMapper = methodeImageModelMapper;
         this.messageProducingContentMapper = messageProducingContentMapper;
-        this.uuidValidator = uuidValidator;
         this.publishingValidator = publishingValidator;
     }
 
@@ -72,7 +69,7 @@ public class MethodeImageModelResource {
     private Content getModelAndHandleExceptions(EomFile methodeContent, HttpHeaders headers, Action<Content> getContentModel) {
         final String transactionId = TransactionIdUtils.getTransactionIdOrDie(headers);
         try {
-            uuidValidator.validate(methodeContent.getUuid());
+            UUIDValidation.of(methodeContent.getUuid());
             if (publishingValidator.isValidForPublishing(methodeContent)) {
                 return getContentModel.perform(transactionId);
             }

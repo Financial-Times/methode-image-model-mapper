@@ -13,7 +13,6 @@ import com.ft.methodeimagemodelmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagemodelmapper.model.EomFile;
 import com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
-import com.ft.methodeimagemodelmapper.validation.UuidValidator;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -83,7 +82,7 @@ public class MethodeImageModelResourceTest {
         contentMapper = new MessageProducingContentMapper(imageModelMapper, new ObjectMapper(), SYSTEM_ID,
                 producer, URI_BUILDER);
 
-        resource = new MethodeImageModelResource(imageModelMapper, contentMapper, new UuidValidator(), new PublishingValidator());
+        resource = new MethodeImageModelResource(imageModelMapper, contentMapper, new PublishingValidator());
         when(headers.getRequestHeader(TRANSACTION_ID_HEADER)).thenReturn(Collections.singletonList(TRANSACTION_ID));
         byte[] image = new byte[20];
         new Random().nextBytes(image);
@@ -229,7 +228,7 @@ public class MethodeImageModelResourceTest {
         contentMapper = new MessageProducingContentMapper(imageModelMapper, mockObjectMapper, SYSTEM_ID,
                 producer, URI_BUILDER);
 
-        resource = new MethodeImageModelResource(imageModelMapper, contentMapper, new UuidValidator(), new PublishingValidator());
+        resource = new MethodeImageModelResource(imageModelMapper, contentMapper, new PublishingValidator());
 
         resource.ingestImageModel(file, headers);
     }

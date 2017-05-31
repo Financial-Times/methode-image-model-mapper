@@ -2,6 +2,7 @@ package com.ft.methodeimagemodelmapper.service;
 
 import com.ft.content.model.Content;
 import com.ft.content.model.Copyright;
+import com.ft.content.model.Distribution;
 import com.ft.content.model.Identifier;
 import com.ft.methodeimagemodelmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagemodelmapper.exception.TransformationException;
@@ -127,7 +128,9 @@ public class MethodeImageModelMapper {
                 .withPublishReference(transactionId)
                 .withLastModified(lastModifiedDate)
                 .withCopyright(Copyright.noticeOnly(copyrightNotice))
-                .withMediaType(mediaType);
+                .withMediaType(mediaType)
+                .withFirstPublishedDate(publishDate)
+                .withCanBeDistributed(Distribution.VERIFY);
     }
 
     private String firstOf(String... strings) {

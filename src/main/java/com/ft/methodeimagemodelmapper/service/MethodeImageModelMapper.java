@@ -34,19 +34,21 @@ import java.util.UUID;
 public class MethodeImageModelMapper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodeImageModelMapper.class);
-    private static final String IMAGE_TYPE = "Image";
+    public static final String IMAGE_TYPE = "Image";
     private static final String MEDIATYPE_PREFIX = "image/";
-    private static final String DEFAULT_MEDIATYPE = "image/jpeg";
+    public static final String DEFAULT_MEDIATYPE = "image/jpeg";
     private static final String SOURCE_METHODE = "http://api.ft.com/system/FTCOM-METHODE";
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
     private static final String DATE_FORMAT = "yyyyMMddHHmmss";
 
     private final BinaryTransformerConfiguration binaryTransformer;
     private final String externalBinaryUrlBasePath;
+    private final GraphicResolver graphicResolver;
 
     public MethodeImageModelMapper(BinaryTransformerConfiguration binaryTransformer, String externalBinaryUrlBasePath) {
         this.binaryTransformer = binaryTransformer;
         this.externalBinaryUrlBasePath = externalBinaryUrlBasePath;
+        this.graphicResolver = new GraphicResolver();
     }
 
     public Content mapImageModel(EomFile eomFile, String transactionId, Date lastModifiedDate) {
@@ -123,7 +125,7 @@ public class MethodeImageModelMapper {
         String uuid = eomFile.getUuid();
         return Content.builder()
                 .withUuid(UUID.fromString(uuid))
-                .withType(IMAGE_TYPE)
+                .withType(graphicResolver.resolveType(eomFile, mediaType))
                 .withIdentifiers(ImmutableSortedSet.of(new Identifier(SOURCE_METHODE, uuid)))
                 .withDescription(altText)
                 .withTitle(caption)

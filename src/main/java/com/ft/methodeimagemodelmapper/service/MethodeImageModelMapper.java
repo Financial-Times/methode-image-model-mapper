@@ -35,7 +35,7 @@ public class MethodeImageModelMapper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodeImageModelMapper.class);
     public static final String IMAGE_TYPE = "Image";
-    private static final String MEDIATYPE_PREFIX = "image/";
+    public static final String MEDIATYPE_PREFIX = "image/";
     public static final String DEFAULT_MEDIATYPE = "image/jpeg";
     private static final String SOURCE_METHODE = "http://api.ft.com/system/FTCOM-METHODE";
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
@@ -45,10 +45,11 @@ public class MethodeImageModelMapper {
     private final String externalBinaryUrlBasePath;
     private final GraphicResolver graphicResolver;
 
-    public MethodeImageModelMapper(BinaryTransformerConfiguration binaryTransformer, String externalBinaryUrlBasePath) {
+    public MethodeImageModelMapper(BinaryTransformerConfiguration binaryTransformer, String externalBinaryUrlBasePath,
+                                   final GraphicResolver graphicResolver) {
         this.binaryTransformer = binaryTransformer;
         this.externalBinaryUrlBasePath = externalBinaryUrlBasePath;
-        this.graphicResolver = new GraphicResolver();
+        this.graphicResolver = graphicResolver;
     }
 
     public Content mapImageModel(EomFile eomFile, String transactionId, Date lastModifiedDate) {
@@ -125,7 +126,7 @@ public class MethodeImageModelMapper {
         String uuid = eomFile.getUuid();
         return Content.builder()
                 .withUuid(UUID.fromString(uuid))
-                .withType(graphicResolver.resolveType(eomFile, mediaType))
+                .withType(graphicResolver.resolveType(eomFile, mediaType, transactionId))
                 .withIdentifiers(ImmutableSortedSet.of(new Identifier(SOURCE_METHODE, uuid)))
                 .withDescription(altText)
                 .withTitle(caption)

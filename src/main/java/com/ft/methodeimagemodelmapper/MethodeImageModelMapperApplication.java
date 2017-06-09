@@ -17,6 +17,7 @@ import com.ft.methodeimagemodelmapper.health.CanConnectToMessageQueueProducerPro
 import com.ft.methodeimagemodelmapper.messaging.MessageProducingContentMapper;
 import com.ft.methodeimagemodelmapper.messaging.NativeCmsPublicationEventsListener;
 import com.ft.methodeimagemodelmapper.resources.MethodeImageModelResource;
+import com.ft.methodeimagemodelmapper.service.GraphicResolver;
 import com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper;
 import com.ft.methodeimagemodelmapper.validation.PublishingValidator;
 import com.ft.methodeimagemodelmapper.validation.UuidValidator;
@@ -64,7 +65,8 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
 
         MethodeImageModelMapper imageModelMapper = new MethodeImageModelMapper(
                 configuration.getBinaryTransformerConfiguration(),
-                configuration.getExternalBinaryUrlBasePath());
+                configuration.getExternalBinaryUrlBasePath(),
+                new GraphicResolver());
         MessageProducingContentMapper contentMapper = new MessageProducingContentMapper(
                 imageModelMapper,
                 objectMapper, consumerConfig.getSystemCode(),

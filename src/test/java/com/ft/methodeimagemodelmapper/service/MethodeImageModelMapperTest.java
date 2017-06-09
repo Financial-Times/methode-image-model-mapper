@@ -41,7 +41,8 @@ public class MethodeImageModelMapperTest {
     public void setUP() {
         methodeImageModelMapper = new MethodeImageModelMapper(
                 new BinaryTransformerConfiguration("localhost:8080", "/image/binary/%s"),
-                "http://com.ft.imagepublish.int.s3.amazonaws.com/");
+                "http://com.ft.imagepublish.int.s3.amazonaws.com/",
+                new GraphicResolver());
     }
 
     @Test

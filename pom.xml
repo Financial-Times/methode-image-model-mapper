@@ -156,9 +156,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>ar.com.hjg</groupId>
-            <artifactId>pngj</artifactId>
-            <version>2.1.0</version>
+            <groupId>com.github.depsypher</groupId>
+            <artifactId>pngtastic</artifactId>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 

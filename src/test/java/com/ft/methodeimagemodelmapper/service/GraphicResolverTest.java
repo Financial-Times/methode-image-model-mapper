@@ -22,7 +22,7 @@ public class GraphicResolverTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        SAMPLE_GRAPHIC = Files.readAllBytes(Paths.get("src/test/resources/sample-image.png"));
+        SAMPLE_GRAPHIC = Files.readAllBytes(Paths.get("src/test/resources/sample-graphic.png"));
         SAMPLE_PNG_IMAGE = Files.readAllBytes(Paths.get("src/test/resources/sample-image.png"));
         SAMPLE_JPEG_IMAGE = Files.readAllBytes(Paths.get("src/test/resources/sample-image.jpg"));
     }

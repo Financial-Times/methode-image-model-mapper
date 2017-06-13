@@ -3,11 +3,11 @@ package com.ft.methodeimagemodelmapper.service;
 import com.ft.methodeimagemodelmapper.model.EomFile;
 import com.googlecode.pngtastic.core.PngException;
 import com.googlecode.pngtastic.core.PngImage;
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.nio.charset.Charset;
 import java.util.Optional;
 
@@ -31,7 +31,7 @@ public class GraphicResolver {
         }
         final PngImage pngImage;
         try {
-            pngImage = new PngImage(new BufferedInputStream(new ByteInputStream(eomFile.getValue(), eomFile.getValue().length)));
+            pngImage = new PngImage(new BufferedInputStream(new ByteArrayInputStream(eomFile.getValue())));
         } catch (PngException ex) {
             LOGGER.warn("Image has mediaType={} but wasn't recognized as true PNG file. uuid={} transactionId={}", mediaType, eomFile.getUuid(), transactionId);
             return IMAGE_TYPE;

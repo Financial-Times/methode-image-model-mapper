@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper.DEFAULT_MEDIATYPE;
-import static com.ft.methodeimagemodelmapper.service.MethodeImageModelMapper.MEDIATYPE_PREFIX;
 import static org.junit.Assert.assertEquals;
 
 public class GraphicResolverTest {
@@ -30,42 +28,42 @@ public class GraphicResolverTest {
     @Test
     public void testGraphicIsGraphic() throws Exception {
         final EomFile eomFile = new EomFile.Builder().withValue(SAMPLE_GRAPHIC).build();
-        final String actualType = graphicResolver.resolveType(eomFile, MEDIATYPE_PREFIX + "png", "tid_test");
+        final String actualType = graphicResolver.resolveType(eomFile, "image/png", "tid_test");
         assertEquals("Graphic", actualType);
     }
 
     @Test
     public void testPngImageIsImage() throws Exception {
         final EomFile eomFile = new EomFile.Builder().withValue(SAMPLE_PNG_IMAGE).build();
-        final String actualType = graphicResolver.resolveType(eomFile, MEDIATYPE_PREFIX + "png", "tid_test");
+        final String actualType = graphicResolver.resolveType(eomFile, "image/png", "tid_test");
         assertEquals("Image", actualType);
     }
 
     @Test
     public void testJpgImageIsImage() throws Exception {
         final EomFile eomFile = new EomFile.Builder().withValue(SAMPLE_JPEG_IMAGE).build();
-        final String actualType = graphicResolver.resolveType(eomFile, DEFAULT_MEDIATYPE, "tid_test");
+        final String actualType = graphicResolver.resolveType(eomFile, "image/jpg", "tid_test");
         assertEquals("Image", actualType);
     }
 
     @Test
     public void testGraphicWithJpegMediatypeIsImage() throws Exception {
         final EomFile eomFile = new EomFile.Builder().withValue(SAMPLE_GRAPHIC).build();
-        final String actualType = graphicResolver.resolveType(eomFile, DEFAULT_MEDIATYPE, "tid_test");
+        final String actualType = graphicResolver.resolveType(eomFile, "image/jpg", "tid_test");
         assertEquals("Image", actualType);
     }
 
     @Test
     public void testOtherMediaTypedImageIsImage() throws Exception {
         final EomFile eomFile = new EomFile.Builder().withValue(SAMPLE_JPEG_IMAGE).build();
-        final String actualType = graphicResolver.resolveType(eomFile, MEDIATYPE_PREFIX + "bmp", "tid_test");
+        final String actualType = graphicResolver.resolveType(eomFile, "image/bmp", "tid_test");
         assertEquals("Image", actualType);
     }
 
     @Test
     public void testUnrecognizedIsWarnedUponAndReturnedImage() throws Exception {
         final EomFile eomFile = new EomFile.Builder().withValue(new byte[]{12, 13, 14, 15, 16}).build();
-        final String actualType = graphicResolver.resolveType(eomFile, MEDIATYPE_PREFIX + "png", "tid_test");
+        final String actualType = graphicResolver.resolveType(eomFile, "image/png", "tid_test");
         assertEquals("Image", actualType);
     }
 }

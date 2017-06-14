@@ -43,10 +43,13 @@ public class MethodeImageModelMapper {
 
     private final BinaryTransformerConfiguration binaryTransformer;
     private final String externalBinaryUrlBasePath;
+    private final GraphicResolver graphicResolver;
 
-    public MethodeImageModelMapper(BinaryTransformerConfiguration binaryTransformer, String externalBinaryUrlBasePath) {
+    public MethodeImageModelMapper(BinaryTransformerConfiguration binaryTransformer, String externalBinaryUrlBasePath,
+                                   final GraphicResolver graphicResolver) {
         this.binaryTransformer = binaryTransformer;
         this.externalBinaryUrlBasePath = externalBinaryUrlBasePath;
+        this.graphicResolver = graphicResolver;
     }
 
     public Content mapImageModel(EomFile eomFile, String transactionId, Date lastModifiedDate) {
@@ -123,6 +126,7 @@ public class MethodeImageModelMapper {
         String uuid = eomFile.getUuid();
         return Content.builder()
                 .withUuid(UUID.fromString(uuid))
+                .withType(graphicResolver.resolveType(eomFile, mediaType, transactionId))
                 .withIdentifiers(ImmutableSortedSet.of(new Identifier(SOURCE_METHODE, uuid)))
                 .withDescription(altText)
                 .withTitle(caption)

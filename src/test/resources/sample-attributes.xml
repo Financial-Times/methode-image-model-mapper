@@ -45,6 +45,18 @@
         <uuid>d7625378-d4cd-11e2-bce1-002128161462</uuid>
         <ratio>1.78</ratio>
         <imageType>Master_2048x1152</imageType>
+        <FTRights>
+		    <FTSyndication/>
+		    <FTAggregation/>
+		    <FTReuse/>
+		    <FTFee/>
+		    <FTSource/>
+		    <FTSourceType/>
+    	</FTRights>
+    	<FTUsage>
+    		<FTFotowareID/>
+    		<FTSendSection/>
+    	</FTUsage>
     </picture>
     <markDeleted>False</markDeleted>
 </meta>

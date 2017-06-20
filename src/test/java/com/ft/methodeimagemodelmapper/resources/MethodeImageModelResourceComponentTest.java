@@ -39,7 +39,6 @@ public class MethodeImageModelResourceComponentTest {
     private static final String MAP_IMAGE_MODEL_URI = "http://localhost:16080/map";
     private static final String INGEST_IMAGE_MODEL_URI = "http://localhost:16080/ingest";
     private static final String INVALID_UUID = "Invalid uuid";
-    private static final String CONTENT_TYPE_NOT_SUPPORTED = "Unsupported type - not an image.";
     private static MessageProducer producer = mock(MessageProducer.class);
     private final Client client = new Client();
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -72,7 +71,9 @@ public class MethodeImageModelResourceComponentTest {
         assertThat(actualContent.getExternalBinaryUrl(), equalTo(expectedContent.getExternalBinaryUrl()));
         assertThat(actualContent.getPublishReference(), equalTo(expectedContent.getPublishReference()));
         assertThat(actualContent.getFirstPublishedDate(), equalTo(expectedContent.getFirstPublishedDate()));
-        assertThat(actualContent.getCanBeDistributed(), equalTo(Distribution.VERIFY));
+        assertThat(actualContent.getCanBeDistributed(), equalTo(expectedContent.getCanBeDistributed()));
+        assertThat(actualContent.getCanBeSyndicated(), equalTo(expectedContent.getCanBeSyndicated()));
+        assertThat(actualContent.getRightsGroup(), equalTo(expectedContent.getRightsGroup()));
     }
 
     @Test
@@ -103,7 +104,9 @@ public class MethodeImageModelResourceComponentTest {
         assertThat(actualContent.getExternalBinaryUrl(), equalTo(expectedContent.getExternalBinaryUrl()));
         assertThat(actualContent.getPublishReference(), equalTo(expectedContent.getPublishReference()));
         assertThat(actualContent.getFirstPublishedDate(), equalTo(expectedContent.getFirstPublishedDate()));
-        assertThat(actualContent.getCanBeDistributed(), equalTo(Distribution.VERIFY));
+        assertThat(actualContent.getCanBeDistributed(), equalTo(expectedContent.getCanBeDistributed()));
+        assertThat(actualContent.getCanBeSyndicated(), equalTo(expectedContent.getCanBeSyndicated()));
+        assertThat(actualContent.getRightsGroup(), equalTo(expectedContent.getRightsGroup()));
     }
 
     @Test

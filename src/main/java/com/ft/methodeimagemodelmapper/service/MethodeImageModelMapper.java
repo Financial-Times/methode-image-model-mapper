@@ -163,8 +163,8 @@ public class MethodeImageModelMapper {
                 .withFirstPublishedDate(publishDate)
                 .withCanBeDistributed(canBeDistributed)
                 .withCanBeSyndicated(canBeSyndicated)
-        		.withRightsGroup(rightsGroup)
-        		.withMasterSource(fotowareID);
+                .withRightsGroup(rightsGroup)
+                .withMasterSource(fotowareID);
     }
 
     private String firstOf(String... strings) {

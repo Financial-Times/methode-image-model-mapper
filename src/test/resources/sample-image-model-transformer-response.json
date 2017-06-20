@@ -29,5 +29,9 @@
   "lastModified": null,
   "canBeSyndicated": "no",
   "firstPublishedDate": "2014-09-30T14:45:00.000Z",
-  "canBeDistributed": "no"
+  "canBeDistributed": "no",
+  "masterSource": {
+    "authority": "http://api.ft.com/system/FT-FOTOWARE",
+    "identifierValue": "A2150A2D7E42445E B78ECFB38A345886"
+  }
 }

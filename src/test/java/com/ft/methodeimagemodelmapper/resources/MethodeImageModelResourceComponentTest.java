@@ -1,33 +1,38 @@
 package com.ft.methodeimagemodelmapper.resources;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ft.content.model.Content;
-import com.ft.content.model.Distribution;
-import com.ft.messagequeueproducer.MessageProducer;
-import com.ft.methodeimagemodelmapper.MethodeImageModelMapperApplication;
-import com.ft.methodeimagemodelmapper.configuration.MethodeImageModelMapperConfiguration;
-import com.ft.methodeimagemodelmapper.configuration.ProducerConfiguration;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import io.dropwizard.setup.Environment;
-import io.dropwizard.testing.junit.DropwizardAppRule;
-import org.apache.commons.lang.StringUtils;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
+import static com.ft.api.util.transactionid.TransactionIdUtils.TRANSACTION_ID_HEADER;
+import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
-import javax.ws.rs.core.MediaType;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static com.ft.api.util.transactionid.TransactionIdUtils.TRANSACTION_ID_HEADER;
-import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.*;
+import javax.ws.rs.core.MediaType;
+
+import org.apache.commons.lang.StringUtils;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ft.content.model.Content;
+import com.ft.messagequeueproducer.MessageProducer;
+import com.ft.methodeimagemodelmapper.MethodeImageModelMapperApplication;
+import com.ft.methodeimagemodelmapper.configuration.MethodeImageModelMapperConfiguration;
+import com.ft.methodeimagemodelmapper.configuration.ProducerConfiguration;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+
+import io.dropwizard.setup.Environment;
+import io.dropwizard.testing.junit.DropwizardAppRule;
 
 public class MethodeImageModelResourceComponentTest {
 
@@ -74,6 +79,9 @@ public class MethodeImageModelResourceComponentTest {
         assertThat(actualContent.getCanBeDistributed(), equalTo(expectedContent.getCanBeDistributed()));
         assertThat(actualContent.getCanBeSyndicated(), equalTo(expectedContent.getCanBeSyndicated()));
         assertThat(actualContent.getRightsGroup(), equalTo(expectedContent.getRightsGroup()));
+        assertThat(actualContent.getMasterSource(), notNullValue());
+        assertThat(actualContent.getMasterSource().getAuthority(), equalTo(expectedContent.getMasterSource().getAuthority()));
+        assertThat(actualContent.getMasterSource().getIdentifierValue(), equalTo(expectedContent.getMasterSource().getIdentifierValue()));
     }
 
     @Test
@@ -107,6 +115,7 @@ public class MethodeImageModelResourceComponentTest {
         assertThat(actualContent.getCanBeDistributed(), equalTo(expectedContent.getCanBeDistributed()));
         assertThat(actualContent.getCanBeSyndicated(), equalTo(expectedContent.getCanBeSyndicated()));
         assertThat(actualContent.getRightsGroup(), equalTo(expectedContent.getRightsGroup()));
+        assertThat(actualContent.getMasterSource(), equalTo(expectedContent.getMasterSource()));
     }
 
     @Test

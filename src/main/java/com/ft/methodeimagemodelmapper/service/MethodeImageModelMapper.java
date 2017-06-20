@@ -111,12 +111,12 @@ public class MethodeImageModelMapper {
             	canBeSyndicated = Syndication.fromString(syndicationValue);
             }
             
-            String ftSource = xpath.evaluate("/meta/FTSource", attributesDocument);
+            String ftSource = xpath.evaluate("/meta/picture/FTSource", attributesDocument);
             if (!Strings.isNullOrEmpty(ftSource)) {
             	rightsGroup = ftSource;
             }
             
-            String ftFotoware = xpath.evaluate("/meta/FTFotowareID", attributesDocument);
+            String ftFotoware = xpath.evaluate("/meta/picture/FTUsage/FTFotowareID", attributesDocument);
             if (!Strings.isNullOrEmpty(ftFotoware)) {
             	fotowareID = new Identifier(SOURCE_FOTOWARE, ftFotoware);
             }

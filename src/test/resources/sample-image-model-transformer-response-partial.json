@@ -32,5 +32,6 @@
   "canBeSyndicated": null,
   "firstPublishedDate": null,
   "canBeDistributed": "verify",
-  "canBeSyndicated": null
+  "canBeSyndicated": null,
+  "masterSource": null
 }

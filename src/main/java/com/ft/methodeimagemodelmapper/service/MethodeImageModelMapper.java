@@ -101,17 +101,17 @@ public class MethodeImageModelMapper {
                 copyrightNotice = "© " + copyrightNotice;
             }
 
-            String distributionValue = xpath.evaluate("/meta/picture/FTAggregation", attributesDocument);
+            String distributionValue = xpath.evaluate("/meta/picture/FTRights/FTAggregation", attributesDocument);
             if (!Strings.isNullOrEmpty(distributionValue)) {
             	canBeDistributed = Distribution.fromString(distributionValue);
             }
             
-            String syndicationValue = xpath.evaluate("/meta/picture/FTSyndication", attributesDocument);
+            String syndicationValue = xpath.evaluate("/meta/picture/FTRights/FTSyndication", attributesDocument);
             if (!Strings.isNullOrEmpty(distributionValue)) {
             	canBeSyndicated = Syndication.fromString(syndicationValue);
             }
             
-            String ftSource = xpath.evaluate("/meta/picture/FTSource", attributesDocument);
+            String ftSource = xpath.evaluate("/meta/picture/FTRights/FTSource", attributesDocument);
             if (!Strings.isNullOrEmpty(ftSource)) {
             	rightsGroup = ftSource;
             }

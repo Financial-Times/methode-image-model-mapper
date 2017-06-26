@@ -53,7 +53,7 @@ public class GraphicResolver {
             final XPath xpath = XPathFactory.newInstance().newXPath();
             final Document attributesDocument = documentBuilder.parse(new InputSource(new StringReader(eomFile.getAttributes())));
             final String ftImageType = xpath.evaluate("/meta/picture/FTImageType", attributesDocument);
-            return GRAPHIC_TYPE.equals(ftImageType);
+            return SOURCE_GRAPHIC_VALUE.equals(ftImageType);
         } catch (SAXException | IOException | XPathExpressionException | ParserConfigurationException ex) {
             LOGGER.warn("Failed retrieving attributes XML of image uuid={} transactionId={} {}", eomFile.getUuid(), transactionId, ex);
         }

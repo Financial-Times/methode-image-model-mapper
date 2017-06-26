@@ -95,10 +95,19 @@ public class GraphicResolverTest {
     }
 
     @Test
-    public void testPngImageAndMalformedMethodeMetadataResultsGraphic() throws Exception {
+    public void testPngImageAndNonexistentMethodeMetadataResultsGraphic() throws Exception {
         final EomFile eomFile = new EomFile.Builder()
                 .withValue(SAMPLE_PNG_IMAGE)
                 .withAttributes("<meta><picture><other>hello</other></picture></meta>").build();
+        final String actualType = graphicResolver.resolveType(eomFile, "image/png", "tid_test");
+        assertEquals("Image", actualType);
+    }
+
+    @Test
+    public void testPngImageAndMalformedMethodeMetadataResultsGraphic() throws Exception {
+        final EomFile eomFile = new EomFile.Builder()
+                .withValue(SAMPLE_PNG_IMAGE)
+                .withAttributes("<meta><picture><ot<<<ture></meta>").build();
         final String actualType = graphicResolver.resolveType(eomFile, "image/png", "tid_test");
         assertEquals("Image", actualType);
     }

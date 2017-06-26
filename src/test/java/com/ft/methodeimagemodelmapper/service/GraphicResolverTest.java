@@ -66,4 +66,31 @@ public class GraphicResolverTest {
         final String actualType = graphicResolver.resolveType(eomFile, "image/png", "tid_test");
         assertEquals("Image", actualType);
     }
+
+    @Test
+    public void testPngGraphicAndMethodeMetadataResultsGraphic() throws Exception {
+        final EomFile eomFile = new EomFile.Builder()
+                .withValue(SAMPLE_GRAPHIC)
+                .withAttributes("<meta><picture><FTImageType>Graphic</FTImageType></picture></meta>").build();
+        final String actualType = graphicResolver.resolveType(eomFile, "image/png", "tid_test");
+        assertEquals("Graphic", actualType);
+    }
+
+    @Test
+    public void testPngImageAndMethodeMetadataResultsGraphic() throws Exception {
+        final EomFile eomFile = new EomFile.Builder()
+                .withValue(SAMPLE_PNG_IMAGE)
+                .withAttributes("<meta><picture><FTImageType>Graphic</FTImageType></picture></meta>").build();
+        final String actualType = graphicResolver.resolveType(eomFile, "image/png", "tid_test");
+        assertEquals("Graphic", actualType);
+    }
+
+    @Test
+    public void testUnrecognizedAndMethodeMetadataResultsGraphic() throws Exception {
+        final EomFile eomFile = new EomFile.Builder()
+                .withValue(new byte[]{12, 13, 14, 15, 16})
+                .withAttributes("<meta><picture><FTImageType>Graphic</FTImageType></picture></meta>").build();
+        final String actualType = graphicResolver.resolveType(eomFile, "image/png", "tid_test");
+        assertEquals("Graphic", actualType);
+    }
 }

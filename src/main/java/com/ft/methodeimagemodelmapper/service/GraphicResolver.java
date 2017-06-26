@@ -31,7 +31,7 @@ public class GraphicResolver {
     private static final String IMAGE_TYPE = "Image";
     private static final String GRAPHIC_TYPE = "Graphic";
     private static final String SOURCE_GRAPHIC_KEY = "ftimagetype";
-    private static final String SORUCE_GRAPHIC_VALUE = "graphic";
+    private static final String SOURCE_GRAPHIC_VALUE = "graphic";
 
     public String resolveType(final EomFile eomFile, final String mediaType, final String transactionId) {
         if (!GRAPHIC_MEDIATYPE.equals(mediaType)) {
@@ -79,7 +79,7 @@ public class GraphicResolver {
                 .filter(chunk -> TEXT_CHUNK.equals(chunk.getTypeString()))
                 .findFirst()
                 .map(chunk -> new String(chunk.getData(), LATIN_1).toLowerCase())
-                .map(data -> data.contains(SOURCE_GRAPHIC_KEY) && data.contains(SORUCE_GRAPHIC_VALUE));
+                .map(data -> data.contains(SOURCE_GRAPHIC_KEY) && data.contains(SOURCE_GRAPHIC_VALUE));
         return isGraphic.isPresent() && isGraphic.get();
     }
 }

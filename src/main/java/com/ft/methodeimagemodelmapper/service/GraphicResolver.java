@@ -27,14 +27,14 @@ public class GraphicResolver {
     private static final Logger LOGGER = LoggerFactory.getLogger(GraphicResolver.class);
     private static final Charset LATIN_1 = Charset.forName("ISO-8859-1");
     private static final String TEXT_CHUNK = "tEXt";
-    private static final String GRAPHIC_MEDIATYPE = "image/png";
+    private static final String GRAPHIC_MEDIA_TYPE = "image/png";
     private static final String IMAGE_TYPE = "Image";
     private static final String GRAPHIC_TYPE = "Graphic";
     private static final String SOURCE_GRAPHIC_KEY = "ftimagetype";
     private static final String SOURCE_GRAPHIC_VALUE = "graphic";
 
     public String resolveType(final EomFile eomFile, final String mediaType, final String transactionId) {
-        if (!GRAPHIC_MEDIATYPE.equals(mediaType)) {
+        if (!GRAPHIC_MEDIA_TYPE.equals(mediaType)) {
             return IMAGE_TYPE;
         }
         if (isGraphicByMethodeMetadata(eomFile, transactionId) ||

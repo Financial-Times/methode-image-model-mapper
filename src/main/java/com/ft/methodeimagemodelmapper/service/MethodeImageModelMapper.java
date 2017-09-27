@@ -5,7 +5,6 @@ import com.ft.content.model.Copyright;
 import com.ft.content.model.Distribution;
 import com.ft.content.model.Identifier;
 import com.ft.content.model.Syndication;
-import com.ft.methodeimagemodelmapper.configuration.BinaryTransformerConfiguration;
 import com.ft.methodeimagemodelmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagemodelmapper.exception.TransformationException;
 import com.ft.methodeimagemodelmapper.model.EomFile;

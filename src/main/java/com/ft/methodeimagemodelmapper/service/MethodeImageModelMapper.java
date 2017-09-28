@@ -5,7 +5,6 @@ import com.ft.content.model.Copyright;
 import com.ft.content.model.Distribution;
 import com.ft.content.model.Identifier;
 import com.ft.content.model.Syndication;
-import com.ft.methodeimagemodelmapper.configuration.BinaryTransformerConfiguration;
 import com.ft.methodeimagemodelmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagemodelmapper.exception.TransformationException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
@@ -43,13 +42,11 @@ public class MethodeImageModelMapper {
     private static final String FORMAT_UNSUPPORTED = "%s is not an %s.";
     private static final String DATE_FORMAT = "yyyyMMddHHmmss";
 
-    private final BinaryTransformerConfiguration binaryTransformer;
     private final String externalBinaryUrlBasePath;
     private final GraphicResolver graphicResolver;
 
-    public MethodeImageModelMapper(BinaryTransformerConfiguration binaryTransformer, String externalBinaryUrlBasePath,
+    public MethodeImageModelMapper(String externalBinaryUrlBasePath,
                                    final GraphicResolver graphicResolver) {
-        this.binaryTransformer = binaryTransformer;
         this.externalBinaryUrlBasePath = externalBinaryUrlBasePath;
         this.graphicResolver = graphicResolver;
     }
@@ -57,7 +54,6 @@ public class MethodeImageModelMapper {
     public Content mapImageModel(EomFile eomFile, String transactionId, Date lastModifiedDate) {
         String uuid = eomFile.getUuid();
         return transformAndHandleExceptions(eomFile, () -> transformEomFileToContent(eomFile, transactionId, lastModifiedDate)
-                .withInternalBinaryUrl(binaryTransformer.buildInternalDataUrl(uuid))
                 .withExternalBinaryUrl(externalBinaryUrlBasePath + uuid)
                 .build());
     }
@@ -87,7 +83,7 @@ public class MethodeImageModelMapper {
         Syndication canBeSyndicated = null;
         String rightsGroup = null;
         Identifier fotowareID = null;
-        
+
         try {
             final Document attributesDocument = documentBuilder.parse(new InputSource(new StringReader(eomFile.getAttributes())));
             caption = xpath.evaluate("/meta/picture/web_information/caption", attributesDocument);
@@ -108,22 +104,22 @@ public class MethodeImageModelMapper {
             if (!Strings.isNullOrEmpty(distributionValue)) {
             	canBeDistributed = Distribution.fromString(distributionValue);
             }
-            
+
             String syndicationValue = xpath.evaluate("/meta/picture/FTRights/FTSyndication", attributesDocument);
             if (!Strings.isNullOrEmpty(distributionValue)) {
             	canBeSyndicated = Syndication.fromString(syndicationValue);
             }
-            
+
             String ftSource = xpath.evaluate("/meta/picture/FTRights/FTSource", attributesDocument);
             if (!Strings.isNullOrEmpty(ftSource)) {
             	rightsGroup = ftSource;
             }
-            
+
             String ftFotoware = xpath.evaluate("/meta/picture/FTUsage/FTFotowareID", attributesDocument);
             if (!Strings.isNullOrEmpty(ftFotoware)) {
             	fotowareID = new Identifier(SOURCE_FOTOWARE, ftFotoware);
             }
-            
+
         } catch (SAXException ex) {
             LOGGER.warn("Failed retrieving attributes XML of image {}. Moving on without adding relevant properties.", eomFile.getUuid(), ex);
         }

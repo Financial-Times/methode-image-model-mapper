@@ -5,8 +5,8 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.ft.content.model.Content;
+
 import com.ft.content.model.Distribution;
-import com.ft.methodeimagemodelmapper.configuration.BinaryTransformerConfiguration;
 import com.ft.methodeimagemodelmapper.exception.MethodeContentNotSupportedException;
 import com.ft.methodeimagemodelmapper.exception.TransformationException;
 import com.ft.methodeimagemodelmapper.model.EomFile;
@@ -39,9 +39,7 @@ public class MethodeImageModelMapperTest {
 
     @Before
     public void setUP() {
-        methodeImageModelMapper = new MethodeImageModelMapper(
-                new BinaryTransformerConfiguration("localhost:8080", "/image/binary/%s"),
-                "http://com.ft.imagepublish.int.s3.amazonaws.com/",
+        methodeImageModelMapper = new MethodeImageModelMapper("http://com.ft.imagepublish.int.s3.amazonaws.com/",
                 new GraphicResolver());
     }
 

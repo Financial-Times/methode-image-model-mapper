@@ -62,3 +62,7 @@ logging:
       logFormat: "%-5p [%d{ISO8601, GMT}] %c: %X{transaction_id} %m [%thread]%n%xEx"
 
 externalBinaryUrlBasePath: "http://com.ft.imagepublish.int.s3.amazonaws.com/"
+
+appInfo:
+    systemCode: "up-mimm"
+    description: "Identifies the images received from Methode and transforms them into UP format (image model)."

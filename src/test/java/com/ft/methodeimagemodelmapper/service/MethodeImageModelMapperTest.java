@@ -39,7 +39,7 @@ public class MethodeImageModelMapperTest {
 
     @Before
     public void setUP() {
-        methodeImageModelMapper = new MethodeImageModelMapper("http://com.ft.imagepublish.int.s3.amazonaws.com/",
+        methodeImageModelMapper = new MethodeImageModelMapper("com.ft.imagepublish.upp-prod-eu.s3.amazonaws.com/",
                 new GraphicResolver());
     }
 
@@ -71,10 +71,28 @@ public class MethodeImageModelMapperTest {
         assertThat(content.getPublishReference(), equalTo(TRANSACTION_ID));
         assertThat(content.getFirstPublishedDate(), equalTo(new Date(1412088300000l)));
         assertThat(content.getCanBeDistributed(), equalTo(Distribution.VERIFY));
+        assertThat(content.getExternalBinaryUrl(), equalTo("com.ft.imagepublish.upp-prod-eu.s3.amazonaws.com/" + UUID));
+    }
+
+    @Test
+    public void testTransformsExternalBinaryUrlIfSet() throws Exception {
+        final EomFile eomFile = createSampleMethodeImageWithExternalBinaryUrl();
+
+        final Content content = methodeImageModelMapper.mapImageModel(eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
+
+        assertThat(content.getUuid(), equalTo(UUID));
+        assertThat(content.getExternalBinaryUrl(), equalTo("http://www.biolettersample.info/wp-content/uploads/2017/05/lab-growth-chart-labrador-puppy-weight-chart.jpg"));
     }
 
     public EomFile createSampleMethodeImage() throws Exception {
         final String attributes = loadFile("sample-attributes.xml");
+        final String systemAttributes = loadFile("sample-system-attributes.xml");
+        final String usageTickets = loadFile("sample-usage-tickets.xml");
+        return new EomFile(UUID, "Image", null, attributes, "", systemAttributes, usageTickets, LAST_MODIFIED_DATE);
+    }
+
+    public EomFile createSampleMethodeImageWithExternalBinaryUrl() throws Exception {
+        final String attributes = loadFile("sample-attributes-with-external-binary-url.xml");
         final String systemAttributes = loadFile("sample-system-attributes.xml");
         final String usageTickets = loadFile("sample-usage-tickets.xml");
         return new EomFile(UUID, "Image", null, attributes, "", systemAttributes, usageTickets, LAST_MODIFIED_DATE);

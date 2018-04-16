@@ -11,6 +11,11 @@ The image messages coming from Methode have the header: `Origin-System-Id: http:
 field `"type":"Image"`. Other messages are discarded.
 
 ## Mapping
+
+Maps Graphics types as well.
+
+External images, from custom URLs can be mapped if the `ExternalUrl` property is set.
+
 ### Methode XPATH to image model mapping
 
 <table border="1">

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Date;
 import org.junit.Before;
 import org.junit.Rule;
@@ -40,6 +41,7 @@ public class MethodeImageModelMapperTest {
     @Before
     public void setUP() {
         methodeImageModelMapper = new MethodeImageModelMapper("com.ft.imagepublish.upp-prod-eu.s3.amazonaws.com/",
+                Arrays.asList("https://ig\\.ft\\.com/.*"),
                 new GraphicResolver());
     }
 
@@ -81,7 +83,17 @@ public class MethodeImageModelMapperTest {
         final Content content = methodeImageModelMapper.mapImageModel(eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
 
         assertThat(content.getUuid(), equalTo(UUID));
-        assertThat(content.getExternalBinaryUrl(), equalTo("http://www.biolettersample.info/wp-content/uploads/2017/05/lab-growth-chart-labrador-puppy-weight-chart.jpg"));
+        assertThat(content.getExternalBinaryUrl(), equalTo("https://ig.ft.com/2017/05/lab-growth-chart-labrador-puppy-weight-chart.jpg"));
+    }
+
+    @Test
+    public void testDoesNotTakeExternalBinaryUrlIfNotInWhitelist() throws Exception {
+        final EomFile eomFile = createSampleMethodeImageWithNotWhitelistedExternalBinaryUrl();
+
+        final Content content = methodeImageModelMapper.mapImageModel(eomFile, TRANSACTION_ID, LAST_MODIFIED_DATE);
+
+        assertThat(content.getUuid(), equalTo(UUID));
+        assertThat(content.getExternalBinaryUrl(), equalTo("com.ft.imagepublish.upp-prod-eu.s3.amazonaws.com/" + UUID));
     }
 
     public EomFile createSampleMethodeImage() throws Exception {
@@ -93,6 +105,13 @@ public class MethodeImageModelMapperTest {
 
     public EomFile createSampleMethodeImageWithExternalBinaryUrl() throws Exception {
         final String attributes = loadFile("sample-attributes-with-external-binary-url.xml");
+        final String systemAttributes = loadFile("sample-system-attributes.xml");
+        final String usageTickets = loadFile("sample-usage-tickets.xml");
+        return new EomFile(UUID, "Image", null, attributes, "", systemAttributes, usageTickets, LAST_MODIFIED_DATE);
+    }
+
+    public EomFile createSampleMethodeImageWithNotWhitelistedExternalBinaryUrl() throws Exception {
+        final String attributes = loadFile("sample-attributes-with-not-whitelisted-external-binary-url.xml");
         final String systemAttributes = loadFile("sample-system-attributes.xml");
         final String usageTickets = loadFile("sample-usage-tickets.xml");
         return new EomFile(UUID, "Image", null, attributes, "", systemAttributes, usageTickets, LAST_MODIFIED_DATE);

@@ -28,6 +28,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -44,10 +45,13 @@ public class MethodeImageModelMapper {
 
     private final String externalBinaryUrlBasePath;
     private final GraphicResolver graphicResolver;
+    private final List<String> externalBinaryUrlWhitelist;
 
     public MethodeImageModelMapper(String externalBinaryUrlBasePath,
+                                   final List<String> externalBinaryUrlWhitelist,
                                    final GraphicResolver graphicResolver) {
         this.externalBinaryUrlBasePath = externalBinaryUrlBasePath;
+        this.externalBinaryUrlWhitelist = externalBinaryUrlWhitelist;
         this.graphicResolver = graphicResolver;
     }
 
@@ -118,10 +122,7 @@ public class MethodeImageModelMapper {
             	fotowareID = new Identifier(SOURCE_FOTOWARE, ftFotoware);
             }
 
-            externalBinaryUrl = xpath.evaluate("/meta/picture/ExternalUrl", attributesDocument);
-            if (externalBinaryUrl.isEmpty()) {
-                externalBinaryUrl = externalBinaryUrlBasePath + eomFile.getUuid();
-            }
+            externalBinaryUrl = resolveExternalBinaryUrl(eomFile, xpath, attributesDocument);
         } catch (SAXException ex) {
             LOGGER.warn("Failed retrieving attributes XML of image {}. Moving on without adding relevant properties.", eomFile.getUuid(), ex);
         }
@@ -168,6 +169,21 @@ public class MethodeImageModelMapper {
                 .withRightsGroup(rightsGroup)
                 .withMasterSource(fotowareID)
                 .withExternalBinaryUrl(externalBinaryUrl);
+    }
+
+    private String resolveExternalBinaryUrl(EomFile eomFile, XPath xpath, Document attributesDocument) throws XPathExpressionException {
+        String externalBinaryUrl = xpath.evaluate("/meta/picture/ExternalUrl", attributesDocument);
+        boolean matched = false;
+        for (final String sample : externalBinaryUrlWhitelist) {
+            if (externalBinaryUrl.matches(sample)) {
+                matched = true;
+                break;
+            }
+        }
+        if (!matched) {
+            externalBinaryUrl = externalBinaryUrlBasePath + eomFile.getUuid();
+        }
+        return externalBinaryUrl;
     }
 
     private String firstOf(String... strings) {

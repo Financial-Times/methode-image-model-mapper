@@ -14,7 +14,7 @@ field `"type":"Image"`. Other messages are discarded.
 
 Maps Graphics types as well.
 
-External images, from custom URLs can be mapped if the `ExternalUrl` property is set.
+External images, from custom whitelisted URLs can be mapped if the `ExternalUrl` property is set. This means that the binary from the Methode payload will not apply, it is ignored and the linked image is from the third party.
 
 ### Methode XPATH to image model mapping
 

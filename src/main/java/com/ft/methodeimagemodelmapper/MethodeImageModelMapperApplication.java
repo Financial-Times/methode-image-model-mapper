@@ -64,6 +64,7 @@ public class MethodeImageModelMapperApplication extends Application<MethodeImage
 
         MethodeImageModelMapper imageModelMapper = new MethodeImageModelMapper(
                 configuration.getExternalBinaryUrlBasePath(),
+                configuration.getExternalBinaryUrlWhitelist(),
                 new GraphicResolver());
         MessageProducingContentMapper contentMapper = new MessageProducingContentMapper(
                 imageModelMapper,

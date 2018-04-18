@@ -122,7 +122,7 @@ public class MethodeImageModelMapper {
             	fotowareID = new Identifier(SOURCE_FOTOWARE, ftFotoware);
             }
 
-            externalBinaryUrl = resolveExternalBinaryUrl(eomFile, xpath, attributesDocument);
+            externalBinaryUrl = resolveExternalBinaryUrl(eomFile, transactionId, xpath, attributesDocument);
         } catch (SAXException ex) {
             LOGGER.warn("Failed retrieving attributes XML of image {}. Moving on without adding relevant properties.", eomFile.getUuid(), ex);
         }
@@ -171,12 +171,13 @@ public class MethodeImageModelMapper {
                 .withExternalBinaryUrl(externalBinaryUrl);
     }
 
-    private String resolveExternalBinaryUrl(EomFile eomFile, XPath xpath, Document attributesDocument) throws XPathExpressionException {
+    private String resolveExternalBinaryUrl(EomFile eomFile, String transactionId, XPath xpath, Document attributesDocument) throws XPathExpressionException {
         String externalBinaryUrl = xpath.evaluate("/meta/picture/ExternalUrl", attributesDocument);
         boolean matched = false;
         for (final String sample : externalBinaryUrlWhitelist) {
             if (externalBinaryUrl.matches(sample)) {
                 matched = true;
+                LOGGER.info("This image will be assigned an externalBinaryUrl from a custom set location. externalBinaryUrl={}, transaction_id={}", externalBinaryUrl, transactionId);
                 break;
             }
         }

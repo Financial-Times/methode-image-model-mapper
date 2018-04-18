@@ -177,7 +177,7 @@ public class MethodeImageModelMapper {
         for (final String sample : externalBinaryUrlWhitelist) {
             if (externalBinaryUrl.matches(sample)) {
                 matched = true;
-                LOGGER.info("This image will be assigned an externalBinaryUrl from a custom set location. externalBinaryUrl={}, transaction_id={}", externalBinaryUrl, transactionId);
+                LOGGER.info("This image will be assigned an externalBinaryUrl from a custom set location. externalBinaryUrl={} transaction_id={}", externalBinaryUrl, transactionId);
                 break;
             }
         }

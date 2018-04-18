@@ -173,18 +173,13 @@ public class MethodeImageModelMapper {
 
     private String resolveExternalBinaryUrl(EomFile eomFile, String transactionId, XPath xpath, Document attributesDocument) throws XPathExpressionException {
         String externalBinaryUrl = xpath.evaluate("/meta/picture/ExternalUrl", attributesDocument);
-        boolean matched = false;
         for (final String sample : externalBinaryUrlWhitelist) {
             if (externalBinaryUrl.matches(sample)) {
-                matched = true;
                 LOGGER.info("This image will be assigned an externalBinaryUrl from a custom set location. externalBinaryUrl={} transaction_id={}", externalBinaryUrl, transactionId);
-                break;
+                return externalBinaryUrl;
             }
         }
-        if (!matched) {
-            externalBinaryUrl = externalBinaryUrlBasePath + eomFile.getUuid();
-        }
-        return externalBinaryUrl;
+        return externalBinaryUrlBasePath + eomFile.getUuid();
     }
 
     private String firstOf(String... strings) {

@@ -28,6 +28,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -44,18 +45,19 @@ public class MethodeImageModelMapper {
 
     private final String externalBinaryUrlBasePath;
     private final GraphicResolver graphicResolver;
+    private final List<String> externalBinaryUrlWhitelist;
 
     public MethodeImageModelMapper(String externalBinaryUrlBasePath,
+                                   final List<String> externalBinaryUrlWhitelist,
                                    final GraphicResolver graphicResolver) {
         this.externalBinaryUrlBasePath = externalBinaryUrlBasePath;
+        this.externalBinaryUrlWhitelist = externalBinaryUrlWhitelist;
         this.graphicResolver = graphicResolver;
     }
 
     public Content mapImageModel(EomFile eomFile, String transactionId, Date lastModifiedDate) {
-        String uuid = eomFile.getUuid();
-        return transformAndHandleExceptions(eomFile, () -> transformEomFileToContent(eomFile, transactionId, lastModifiedDate)
-                .withExternalBinaryUrl(externalBinaryUrlBasePath + uuid)
-                .build());
+        return transformAndHandleExceptions(eomFile,
+                () -> transformEomFileToContent(eomFile, transactionId, lastModifiedDate).build());
     }
 
     Content transformAndHandleExceptions(EomFile eomFile, Action<Content> transformAction) {
@@ -83,7 +85,7 @@ public class MethodeImageModelMapper {
         Syndication canBeSyndicated = null;
         String rightsGroup = null;
         Identifier fotowareID = null;
-
+        String externalBinaryUrl = null;
         try {
             final Document attributesDocument = documentBuilder.parse(new InputSource(new StringReader(eomFile.getAttributes())));
             caption = xpath.evaluate("/meta/picture/web_information/caption", attributesDocument);
@@ -120,6 +122,7 @@ public class MethodeImageModelMapper {
             	fotowareID = new Identifier(SOURCE_FOTOWARE, ftFotoware);
             }
 
+            externalBinaryUrl = resolveExternalBinaryUrl(eomFile, transactionId, xpath, attributesDocument);
         } catch (SAXException ex) {
             LOGGER.warn("Failed retrieving attributes XML of image {}. Moving on without adding relevant properties.", eomFile.getUuid(), ex);
         }
@@ -164,7 +167,19 @@ public class MethodeImageModelMapper {
                 .withCanBeDistributed(canBeDistributed)
                 .withCanBeSyndicated(canBeSyndicated)
                 .withRightsGroup(rightsGroup)
-                .withMasterSource(fotowareID);
+                .withMasterSource(fotowareID)
+                .withExternalBinaryUrl(externalBinaryUrl);
+    }
+
+    private String resolveExternalBinaryUrl(EomFile eomFile, String transactionId, XPath xpath, Document attributesDocument) throws XPathExpressionException {
+        String externalBinaryUrl = xpath.evaluate("/meta/picture/ExternalUrl", attributesDocument);
+        for (final String sample : externalBinaryUrlWhitelist) {
+            if (externalBinaryUrl.matches(sample)) {
+                LOGGER.info("This image will be assigned an externalBinaryUrl from a custom set location. externalBinaryUrl={} transaction_id={}", externalBinaryUrl, transactionId);
+                return externalBinaryUrl;
+            }
+        }
+        return externalBinaryUrlBasePath + eomFile.getUuid();
     }
 
     private String firstOf(String... strings) {

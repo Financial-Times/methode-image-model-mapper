@@ -19,7 +19,7 @@
   "mediaType": "image/jpeg",
   "pixelWidth": null,
   "pixelHeight": null,
-  "externalBinaryUrl": "http://com.ft.imagepublish.int.s3.amazonaws.com/d7625378-d4cd-11e2-bce1-002128161462",
+  "externalBinaryUrl": "http://com.ft.imagepublish.test.s3.amazonaws.com/d7625378-d4cd-11e2-bce1-002128161462",
   "members": null,
   "mainImage": null,
   "standout": null,

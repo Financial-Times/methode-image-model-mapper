@@ -59,6 +59,6 @@ producer:
 
 contentUriPrefix: http://methode-image-model-mapper.svc.ft.com/image/model
 
-externalBinaryUrlBasePath: "http://com.ft.imagepublish.int.s3.amazonaws.com/"
+externalBinaryUrlBasePath: "http://com.ft.imagepublish.test.s3.amazonaws.com/"
 externalBinaryUrlWhitelist:
   - "https://ig\\.ft\\.com/.*"

@@ -61,7 +61,7 @@ logging:
     - type: console
       logFormat: "%-5p [%d{ISO8601, GMT}] %c: %X{transaction_id} %m [%thread]%n%xEx"
 
-externalBinaryUrlBasePath: "http://com.ft.imagepublish.test.s3.amazonaws.com/"
+externalBinaryUrlBasePath: "http://com.ft.imagepublish.k8s-content-test.test.s3.amazonaws.com/"
 externalBinaryUrlWhitelist:
   - "https://ig\\.ft\\.com/.*"
 

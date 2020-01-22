@@ -17,7 +17,7 @@ consumer:
     severity: 2
     businessImpact: "Newly published Methode image models will not be available from the Content API"
     technicalSummary: "Tests that kafka-proxy is reachable and message can be consumed"
-    panicGuideUrl: "https://dewey.ft.com/up-mimm.html"
+    panicGuideUrl: "https://runbooks.in.ft.com/up-mimm"
   systemCode: methode-web-pub
 
 producer:
@@ -34,7 +34,7 @@ producer:
       severity: 2
       businessImpact: "Newly published Methode image models will not be available from the Content API"
       technicalSummary: "Tests that kafka-proxy is reachable and the CmsPublicationEvents topic exists"
-      panicGuideUrl: "https://dewey.ft.com/up-mimm.html"
+      panicGuideUrl: "https://runbooks.in.ft.com/up-mimm"
 
 contentUriPrefix: http://methode-image-model-mapper.svc.ft.com/image/model
 

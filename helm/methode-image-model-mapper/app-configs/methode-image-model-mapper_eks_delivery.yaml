@@ -2,4 +2,3 @@
 replicaCount: 2
 service:
   name: methode-image-model-mapper
-eksCluster: true
